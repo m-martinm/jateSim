@@ -1,8 +1,6 @@
 package app;
 
-public enum Mode {
-    MOVE,
-    CONNECT,
-    SELECT,
-    DEFAULT
+public enum Mode
+{
+  MOVE, CONNECT, SELECT, DEFAULT
 }

@@ -1,6 +1,6 @@
 package components;
 
-public enum PinType {
-    INPUT,
-    OUTPUT
+public enum PinType
+{
+  INPUT, OUTPUT
 }
