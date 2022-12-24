@@ -1,7 +1,10 @@
-public class Main {
-    public static void main(String[] args) {
+import app.Engine;
 
-        System.out.println("Hello world!");
-        new Engine(600, 600);
+import javax.swing.*;
+
+public class Main {
+    public static void main(String[] args){
+
+        Engine test = new Engine(600, 600);
     }
 }
