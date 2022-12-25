@@ -74,18 +74,22 @@ public class Pin extends SimComponent implements MouseListener
   {
     if(Engine.mode != Mode.CONNECT) return;
     if(selectedPin == null) {
-      System.out.println("Start signal");
       this.selectPin();
-    } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
-      System.out.println("input connected to output");
 
-      selectedPin.deselectPin();
+    } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
+
+      if(!Signal.createSignal(selectedPin, this)) {
+        System.out.println("Already connected!");
+      } else selectedPin.deselectPin();
+
     } else if(selectedPin.type == PinType.OUTPUT && this.type == PinType.INPUT) {
-      System.out.println("output connected to input");
-      new Signal(this, selectedPin).connectPins();
-      selectedPin.deselectPin();
+      if(!Signal.createSignal(this, selectedPin)) {
+        System.out.println("Already connected!");
+      } else selectedPin.deselectPin();
+
     } else if(this == selectedPin) {
       selectedPin.deselectPin();
+
     } else {
       System.out.println("invalid connection");
     }

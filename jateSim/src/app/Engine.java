@@ -13,14 +13,9 @@ public class Engine
 {
 
   public static JFrame frame = new JFrame("jateSim");
-  public static ButtonPanel buttonsPanel = new ButtonPanel(0, 0, 0, 0, Color.darkGray, "buttons");
-
-  public static myPanel contentPanel = new myPanel(0, 0, 0, 0, Color.lightGray, "content");
-  public static myButton testButton = new myButton("Test");
-  public static JLabel modeLabel = new JLabel("DEFAULT");
-
-  public static myBar menuBar = new myBar();
-
+  public static MyBar menuBar = new MyBar();
+  public static ContentPanel contentPanel = new ContentPanel();
+  public static ControlPanel controlPanel = new ControlPanel();
   public static Mode mode = Mode.DEFAULT;
 
   public Engine(int width, int height)
@@ -30,31 +25,25 @@ public class Engine
     frame.addComponentListener(new FrameListener());
     frame.addKeyListener(new FrameListener());
     frame.setSize(width, height);
-    contentPanel.setLayout(null);
 
-    modeLabel.setForeground(Color.lightGray);
-    modeLabel.setToolTipText("(M)OVE, (C)ONNECT, (S)ELECT");
-    buttonsPanel.addButton(modeLabel);
-    buttonsPanel.addButton(testButton);
-    frame.setJMenuBar(menuBar);
-    frame.add(buttonsPanel);
+    frame.add(controlPanel);
     frame.add(contentPanel);
-    frame.setVisible(true);
+    frame.setJMenuBar(menuBar);
+
     frame.setLocationRelativeTo(null);
-
+    frame.setVisible(true);
   }
 
-  public static void updateSize()
-  {
-    Rectangle r = frame.getContentPane().getBounds();
-    contentPanel.setBounds(0, 0, r.width, r.height - ButtonPanel.height);
-    buttonsPanel.setBounds(r.x, r.height - ButtonPanel.height, r.width, ButtonPanel.height);
-  }
+    public static void updateSize()
+    {
+      Rectangle r = frame.getContentPane().getBounds();
+      controlPanel.setBounds(0, 0, r.width, ControlPanel.height);
+    }
 
   public static void setMode(Mode m)
   {
     mode = m;
-    modeLabel.setText(m.name());
+    controlPanel.setModeText(m.name());
   }
 
   public static void addGate(GateType type)
@@ -79,7 +68,7 @@ public class Engine
   }
 
   /*
-  TODO update process
+  Update process
   1. update input pins using signal.update()
   2. update output pins using gate.update()
   3. update display components

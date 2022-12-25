@@ -15,7 +15,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public JPopupMenu popupMenu;
   public JMenuItem remove = new JMenuItem("Remove component");
   //TODO add functionality to menu item
-
+  //TODo change it to extends JLabel
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
     this.label = new JLabel(text);
