@@ -11,7 +11,7 @@ import java.awt.*;
 public class Engine
 {
 
-  public static JFrame frame = new JFrame("gSim");
+  public static JFrame frame = new JFrame("jateSim");
   public static ButtonPanel buttonsPanel = new ButtonPanel(0, 0, 0, 0, Color.darkGray, "buttons");
 
   public static myPanel contentPanel = new myPanel(0, 0, 0, 0, Color.lightGray, "content");
