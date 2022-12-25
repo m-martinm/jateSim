@@ -14,6 +14,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public JPanel parent;
   public JPopupMenu popupMenu;
   public JMenuItem remove = new JMenuItem("Remove component");
+  //TODO add functionality to menu item
 
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
@@ -26,7 +27,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
     this.label.addMouseMotionListener(this);
     this.parent = parentPanel;
     this.parent.add(this.label);
-    
+
   }
 
   public Rectangle getRect()

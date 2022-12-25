@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//TODO finish class
 public class myBar extends JMenuBar implements ActionListener
 {
   JMenu file = new JMenu("File");
