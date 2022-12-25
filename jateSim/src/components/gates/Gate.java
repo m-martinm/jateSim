@@ -6,10 +6,12 @@ import app.Engine;
 import components.*;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Gate extends SimComponent
 {
   public static final Dimension size = new Dimension(50, 70);
+  public static ArrayList<Gate> gates = new ArrayList<>();
 
   Pin input1;
   Pin input2;
@@ -22,7 +24,7 @@ public class Gate extends SimComponent
     this.input2 = new Pin(x - Pin.size.width, y + size.height - Pin.size.height, "2", this.parent, this, PinType.INPUT);
     this.output = new Pin(x + size.width, y + size.height / 2 - Pin.size.height / 2, "O", this.parent, this,
                           PinType.OUTPUT);
-    
+    gates.add(this);
   }
 
   public int getOutput()

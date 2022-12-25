@@ -1,13 +1,11 @@
 package app;
 
 import components.*;
-import components.gates.AndGate;
-import components.gates.Gate;
+import components.gates.*;
 
 import javax.swing.*;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 
 public class Engine
@@ -18,12 +16,11 @@ public class Engine
 
   public static myPanel contentPanel = new myPanel(0, 0, 0, 0, Color.lightGray, "content");
   public static myButton testButton = new myButton("Test");
+  public static JLabel modeLabel = new JLabel("DEFAULT");
 
   public static myBar menuBar = new myBar();
 
-  public static Mode mode = Mode.MOVE;
-
-  public static ArrayList<Gate> gates = new ArrayList<>();
+  public static Mode mode = Mode.DEFAULT;
 
   public Engine(int width, int height)
   {
@@ -33,7 +30,10 @@ public class Engine
     frame.addKeyListener(new FrameListener());
     frame.setSize(width, height);
     contentPanel.setLayout(null);
-    testButton.addActionListener(e -> addGate());
+
+    modeLabel.setForeground(Color.lightGray);
+    modeLabel.setToolTipText("(M)OVE, (C)ONNECT, (S)ELECT");
+    buttonsPanel.addButton(modeLabel);
     buttonsPanel.addButton(testButton);
     frame.setJMenuBar(menuBar);
     frame.add(buttonsPanel);
@@ -53,9 +53,41 @@ public class Engine
   public static void setMode(Mode m)
   {
     mode = m;
+    modeLabel.setText(m.name());
   }
 
-  public static void addGate()
+  public static void addGate(GateType type)
+  {
+    switch(type) {
+      case AND:
+        new AndGate(50, 50, contentPanel);
+        break;
+      case OR:
+        new OrGate(50, 50, contentPanel);
+        break;
+      case NAND:
+        new NandGate(50, 50, contentPanel);
+        break;
+      case NOR:
+        new NorGate(50, 50, contentPanel);
+        break;
+      default:
+        break;
+    }
+    contentPanel.repaint();
+  }
+
+  public static void tickClock()
+  {
+    // TODO implement
+  }
+
+  public static void startSimulation()
+  {
+    //TODO implement
+  }
+
+  public static void endSimulation()
   {
     //TODO implement
   }

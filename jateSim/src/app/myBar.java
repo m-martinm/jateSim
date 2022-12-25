@@ -1,5 +1,8 @@
 package app;
 
+import components.gates.Gate;
+import components.gates.GateType;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +17,10 @@ public class myBar extends JMenuBar implements ActionListener
   JMenu edit = new JMenu("Edit");
   JMenu addGate = new JMenu("Add gate");
   JMenuItem AND = new JMenuItem("AND Gate");
+  JMenuItem OR = new JMenuItem("OR Gate");
+  JMenuItem NAND = new JMenuItem("NAND Gate");
+  JMenuItem NOR = new JMenuItem("NOR Gate");
+
 
   JMenu simulate = new JMenu("Simulate");
   JMenuItem start = new JMenuItem("Start simulation");
@@ -40,6 +47,9 @@ public class myBar extends JMenuBar implements ActionListener
   private void initEdit()
   {
     this.addGate.add(AND);
+    this.addGate.add(OR);
+    this.addGate.add(NAND);
+    this.addGate.add(NOR);
     this.edit.add(addGate);
   }
 
@@ -55,6 +65,9 @@ public class myBar extends JMenuBar implements ActionListener
     save.addActionListener(this);
     load.addActionListener(this);
     AND.addActionListener(this);
+    NAND.addActionListener(this);
+    OR.addActionListener(this);
+    NOR.addActionListener(this);
     slow.addActionListener(this);
     start.addActionListener(this);
   }
@@ -62,6 +75,22 @@ public class myBar extends JMenuBar implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    System.out.println(e.getActionCommand());
+    switch(e.getActionCommand()) {
+      case "OR Gate":
+        Engine.addGate(GateType.OR);
+        break;
+      case "AND Gate":
+        Engine.addGate(GateType.AND);
+        break;
+      case "NAND Gate":
+        Engine.addGate(GateType.NAND);
+        break;
+      case "NOR Gate":
+        Engine.addGate(GateType.NOR);
+        break;
+      default:
+        break;
+    }
+    System.out.println(Gate.gates);
   }
 }

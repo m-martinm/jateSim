@@ -4,9 +4,9 @@ import javax.swing.*;
 
 public class NorGate extends Gate
 {
-  public NorGate(int x, int y, int w, int h, String text, JPanel parentPanel)
+  public NorGate(int x, int y, JPanel parentPanel)
   {
-    super(x, y, text, parentPanel);
+    super(x, y, "NOR", parentPanel);
   }
 
   public void update()

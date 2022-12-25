@@ -26,6 +26,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
     this.label.addMouseMotionListener(this);
     this.parent = parentPanel;
     this.parent.add(this.label);
+    
   }
 
   public Rectangle getRect()

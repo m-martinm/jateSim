@@ -59,7 +59,6 @@ public class FrameListener implements ComponentListener, KeyListener
       default:
         break;
     }
-    System.out.println(Engine.mode.toString());
   }
 
   @Override

@@ -6,9 +6,9 @@ import javax.swing.*;
 
 public class NandGate extends Gate
 {
-  public NandGate(int x, int y, String text, JPanel parentPanel)
+  public NandGate(int x, int y, JPanel parentPanel)
   {
-    super(x, y, text, parentPanel);
+    super(x, y, "NAND", parentPanel);
   }
 
   public void update()
