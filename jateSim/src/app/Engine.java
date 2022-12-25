@@ -77,6 +77,16 @@ public class Engine
     contentPanel.repaint();
   }
 
+  /*
+  TODO update process
+  1. update input pins using signal.update()
+  2. update output pins using gate.update()
+  3. update display components
+  This is one clock tick
+  This way u can only use synchronized systems with one clock
+  In the future create a clock component so you can give clock signals to different components
+   */
+
   public static void tickClock()
   {
     // TODO implement
