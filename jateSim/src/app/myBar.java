@@ -1,15 +1,13 @@
 package app;
 
-import components.gates.Gate;
 import components.gates.GateType;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 //TODO finish class
-public class myBar extends JMenuBar implements ActionListener
+public class MyBar extends JMenuBar implements ActionListener
 {
   JMenu file = new JMenu("File");
   JMenuItem save = new JMenuItem("Save");
@@ -28,7 +26,7 @@ public class myBar extends JMenuBar implements ActionListener
   JMenu setSpeed = new JMenu("Set clock speed");
   JMenuItem slow = new JMenuItem("1/8");
 
-  public myBar()
+  public MyBar()
   {
     initFile();
     initEdit();

@@ -4,13 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class myButton extends JButton
+public class MyButton extends JButton
 {
 
-  public myButton(String text)
+  public MyButton(String text)
   {
     setText(text);
-    setBackground(Color.gray);
+    setBackground(Color.lightGray);
     setBorderPainted(false);
     setFocusPainted(false);
     setFocusable(false);

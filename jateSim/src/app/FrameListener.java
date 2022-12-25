@@ -1,9 +1,8 @@
 package app;
 
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import components.Pin;
+
+import java.awt.event.*;
 
 public class FrameListener implements ComponentListener, KeyListener
 {
@@ -40,21 +39,27 @@ public class FrameListener implements ComponentListener, KeyListener
   @Override
   public void keyPressed(KeyEvent e)
   {
+    if(Engine.mode == Mode.MOVE) Engine.contentPanel.movePanel(e);
     switch(e.getKeyChar()) {
       case 'M':
         if(Engine.mode == Mode.MOVE) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.MOVE);
+        Pin.deselectAll();
         break;
       case 'D':
         Engine.setMode(Mode.DEFAULT);
+        Pin.deselectAll();
         break;
       case 'C':
-        if(Engine.mode == Mode.CONNECT) Engine.setMode(Mode.DEFAULT);
-        else Engine.setMode(Mode.CONNECT);
+        if(Engine.mode == Mode.CONNECT) {
+          Engine.setMode(Mode.DEFAULT);
+          Pin.deselectAll();
+        } else Engine.setMode(Mode.CONNECT);
         break;
       case 'S':
         if(Engine.mode == Mode.SELECT) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.SELECT);
+        Pin.deselectAll();
         break;
       default:
         break;
