@@ -44,4 +44,16 @@ public class Gate extends SimComponent
                                 Pin.size.height);
   }
 
+  public void update()
+  {
+
+  }
+
+  public static void updateGates()
+  {
+    for(Gate g : gates) {
+      g.update();
+    }
+  }
+
 }

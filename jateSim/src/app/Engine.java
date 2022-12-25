@@ -1,6 +1,7 @@
 package app;
 
 import components.*;
+import components.displayComponents.DisplayComponent;
 import components.gates.*;
 
 import javax.swing.*;
@@ -89,7 +90,9 @@ public class Engine
 
   public static void tickClock()
   {
-    // TODO implement
+    Signal.updateSignals();
+    Gate.updateGates();
+    DisplayComponent.updateDisplayComponents();
   }
 
   public static void startSimulation()

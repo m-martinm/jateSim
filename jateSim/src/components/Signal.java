@@ -26,6 +26,13 @@ public class Signal
     this.output.setValue(this.input.getValue());
   }
 
+  public static void updateSignals()
+  {
+    for(Signal s : signals) {
+      s.update();
+    }
+  }
+
   public void connectPins()
   {
     Graphics g = Engine.contentPanel.getGraphics();

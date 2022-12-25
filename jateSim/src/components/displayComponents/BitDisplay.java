@@ -1,4 +1,7 @@
-package components;
+package components.displayComponents;
+
+import components.Pin;
+import components.SimComponent;
 
 import javax.swing.*;
 
