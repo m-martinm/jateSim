@@ -92,6 +92,5 @@ public class myBar extends JMenuBar implements ActionListener
       default:
         break;
     }
-    System.out.println(Gate.gates);
   }
 }
