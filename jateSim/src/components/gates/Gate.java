@@ -3,6 +3,7 @@ package components.gates;
 import javax.swing.*;
 
 import app.Engine;
+import app.Mode;
 import components.*;
 
 import java.awt.*;
@@ -35,6 +36,7 @@ public class Gate extends SimComponent
   @Override
   public void setLocation(int x, int y)
   {
+    if(Engine.mode != Mode.MOVE) return;
     if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
     int a = x - this.label.getWidth() / 2;
     int b = y - this.label.getHeight() / 2;

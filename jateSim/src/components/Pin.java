@@ -10,10 +10,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Observable;
-
-// TODO https://stackoverflow.com/questions/15433855/how-to-create-change-listener-for-variable
-// add a reference to its signal
 
 public class Pin extends SimComponent implements MouseListener
 {
@@ -28,7 +24,6 @@ public class Pin extends SimComponent implements MouseListener
   SimComponent parentSimComponent;
   PinType type;
   boolean selected;
-  public ArrayList<Signal> connectedSignals;
 
   public Pin(int x, int y, String text, JPanel parentPanel, SimComponent parentSimComponent, PinType type)
   {
@@ -37,7 +32,6 @@ public class Pin extends SimComponent implements MouseListener
     this.type = type;
     this.value = new SimObservable(UNKNOWN);
     this.selected = false;
-    this.connectedSignals = new ArrayList<>();
     pins.add(this);
   }
 
@@ -48,9 +42,7 @@ public class Pin extends SimComponent implements MouseListener
 
   public void setValue(int newValue)
   {
-    // TODO notify observers and make the signals observers
-    // if its an output pin
-    this.value.setData(newValue); // maybe working should check
+    this.value.setData(newValue);
   }
 
   public void selectPin()
@@ -77,6 +69,7 @@ public class Pin extends SimComponent implements MouseListener
   @Override
   public void setLocation(int x, int y)
   {
+
   }
 
   @Override
@@ -92,13 +85,12 @@ public class Pin extends SimComponent implements MouseListener
         new SimNotification("Pins are already connected!");
       } else {
         selectedPin.deselectPin();
-        //        this.connectedSignals.add(); // TODO finish: createSignal should return an object or null
       }
 
     } else if(selectedPin.type == PinType.OUTPUT && this.type == PinType.INPUT) {
       if(!Signal.createSignal(this, selectedPin)) {
         new SimNotification("Pins are already connected!");
-      } else selectedPin.deselectPin(); //TODO same as above
+      } else selectedPin.deselectPin();
 
     } else if(this == selectedPin) {
       selectedPin.deselectPin();

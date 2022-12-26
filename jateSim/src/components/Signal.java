@@ -23,7 +23,7 @@ public class Signal extends JPanel implements SimObserver
   private Signal(Pin inp, Pin out)
   {
     this.input = inp;
-    out.value.addObserver(this); // TODO check if working
+    out.value.addObserver(this);
     this.output = out;
     this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
     this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
@@ -31,7 +31,7 @@ public class Signal extends JPanel implements SimObserver
     //TODO don't need the points just call reposition();
     signals.add(this);
     setBounds(this.rect);
-    setOpaque(false);
+    setOpaque(true); //TODO change
     Engine.contentPanel.add(this);
     this.repaint();
   }
@@ -58,10 +58,21 @@ public class Signal extends JPanel implements SimObserver
 
   public void reposition()
   {
-    this.rect.x = this.output.getX() + Pin.size.width;
-    this.rect.y = this.output.getY() + Pin.size.height / 2;
-    this.rect.width = this.input.getX() - this.rect.x;
-    this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
+    if(this.output.getX() < this.input.getX() && this.output.getY() < this.input.getY()) {
+      this.rect.x = this.output.getX() + Pin.size.width;
+      this.rect.y = this.output.getY() + Pin.size.height / 2;
+      this.rect.width = this.input.getX() - this.rect.x;
+      this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
+    } else if(this.output.getX() < this.input.getX() && this.output.getY() > this.input.getY()) {
+      this.rect.x = this.output.getX() + Pin.size.width;
+      this.rect.y = this.output.getY() + Pin.size.height / 2 - this.input.getY() - this.input.getY();
+      this.rect.width = this.input.getX() - this.rect.x;
+      this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
+    } else if(this.output.getX() > this.input.getX() && this.output.getY() < this.input.getY()) {
+
+    } else if(this.output.getX() > this.input.getX() && this.output.getY() > this.input.getY()) {
+
+    }
     this.setBounds(this.rect);
     this.repaint();
   }

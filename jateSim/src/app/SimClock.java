@@ -1,12 +1,41 @@
 package app;
 
-public class SimClock
-{
-  int preferredFps;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-  public SimClock(int fps)
+public class SimClock implements ActionListener
+{
+  private final Timer timer;
+  private int updateSpeed;
+
+  public SimClock(int updatesPerSecond)
   {
-    this.preferredFps = fps;
-    //TODO implement
+    this.updateSpeed = 1000 / updatesPerSecond;
+    this.timer = new Timer(updateSpeed, this);
+    this.timer.setRepeats(true);
+  }
+
+  public void changeSpeed(int updatesPerSecond)
+  {
+    this.stop();
+    this.timer.setDelay(1000 / updatesPerSecond);
+    this.start();
+  }
+
+  public void start()
+  {
+    this.timer.start();
+  }
+
+  public void stop()
+  {
+    this.timer.stop();
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    Engine.updateCycle();
   }
 }

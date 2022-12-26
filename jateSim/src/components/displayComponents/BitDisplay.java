@@ -1,5 +1,7 @@
 package components.displayComponents;
 
+import app.Engine;
+import app.Mode;
 import components.Pin;
 import components.PinType;
 import components.Signal;
@@ -24,6 +26,7 @@ public class BitDisplay extends DisplayComponent
   @Override
   public void setLocation(int x, int y)
   {
+    if(Engine.mode != Mode.MOVE) return;
     if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
     int a = x - this.label.getWidth() / 2;
     int b = y - this.label.getHeight() / 2;

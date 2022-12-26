@@ -42,7 +42,7 @@ public class SimObservable
 
   public void deleteObservers()
   {
-    //TODO implement
+    this.observers.clear();
   }
 
   public int getData()

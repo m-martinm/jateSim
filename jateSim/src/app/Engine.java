@@ -22,6 +22,7 @@ public class Engine
   public static ContentPanel contentPanel = new ContentPanel();
   public static ControlPanel controlPanel = new ControlPanel();
   public static Mode mode = Mode.DEFAULT;
+  public static SimClock clock = new SimClock(1);
 
   public Engine(int width, int height)
   {
@@ -106,21 +107,21 @@ public class Engine
   In the future create a clock component, so you can give clock signals to different components
    */
 
-  public static void tickClock()
+  public static void updateCycle()
   {
-    //    Signal.updateSignals(); // TODO maybe working without updating signals
     Gate.updateGates();
-    //    Signal.updateSignals(); //TODO maybe working with one signal update
     DisplayComponent.updateDisplayComponents();
   }
 
   public static void startSimulation()
   {
-    //TODO implement
+    new SimNotification("Simulation started!", true);
+    clock.start();
   }
 
-  public static void endSimulation()
+  public static void stopSimulation()
   {
-    //TODO implement
+    new SimNotification("Simulation ended!", true);
+    clock.stop();
   }
 }

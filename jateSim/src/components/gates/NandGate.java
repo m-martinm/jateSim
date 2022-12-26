@@ -18,11 +18,11 @@ public class NandGate extends Gate
     } else {
       int tmp = this.input1.getValue() & this.input2.getValue();
       switch(tmp) {
-        case 1:
-          this.output.setValue(0);
+        case Pin.HIGH:
+          this.output.setValue(Pin.LOW);
           break;
-        case 0:
-          this.output.setValue(1);
+        case Pin.LOW:
+          this.output.setValue(Pin.HIGH);
           break;
         default:
           this.output.setValue(Pin.UNKNOWN);
