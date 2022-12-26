@@ -108,15 +108,10 @@ public class Engine
 
   public static void tickClock()
   {
-    for(SwitchSource s : SwitchSource.testArr)
-    {
-      System.out.println("SOURCE: " + s.output.getValue());
-    }
     Signal.updateSignals();
     Gate.updateGates();
     Signal.updateSignals();
     DisplayComponent.updateDisplayComponents();
-    new SimNotification("Clock ticked"); // TODO remove
   }
 
   public static void startSimulation()

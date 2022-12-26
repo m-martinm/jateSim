@@ -18,7 +18,5 @@ public class AndGate extends Gate
     } else {
       this.output.setValue(this.input1.getValue() & this.input2.getValue());
     }
-    System.out.println("AND inp1: " + this.input1.getValue() + "  AND inp2: " + this.input2.getValue());
-    System.out.println(this.output.getValue());
   }
 }

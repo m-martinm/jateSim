@@ -92,7 +92,7 @@ public class Pin extends SimComponent implements MouseListener
       selectedPin.deselectPin();
 
     } else {
-      System.out.println("invalid connection");
+      new SimNotification("Invalid connection!");
     }
 
   }

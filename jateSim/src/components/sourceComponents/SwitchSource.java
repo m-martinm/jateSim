@@ -1,26 +1,21 @@
 package components.sourceComponents;
 
-import components.Pin;
-import components.PinType;
-import components.Signal;
+import components.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class SwitchSource extends SourceComponent
 {
   public static final Dimension size = new Dimension(30, 30);
   public Pin output;
-  public static ArrayList<SwitchSource> testArr = new ArrayList<>();
 
   public SwitchSource(int x, int y, JPanel parentPanel)
   {
     super(x, y, size.width, size.height, "S(X)", parentPanel);
     this.output = new Pin(x + size.width, (y + size.height / 2) - Pin.size.height / 2, "O", parentPanel, this,
                           PinType.OUTPUT);
-    testArr.add(this);
   }
 
   @Override
@@ -42,11 +37,9 @@ public class SwitchSource extends SourceComponent
       case 1, -1:
         this.output.setValue(Pin.LOW);
         this.label.setText("S(0)");
-        System.out.println("switch: " + this.output.getValue());
         break;
       case 0:
         this.output.setValue(Pin.HIGH);
-        System.out.println("switch: " + this.output.getValue());
         this.label.setText("S(1)");
         break;
       default:

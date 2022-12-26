@@ -44,7 +44,6 @@ public class BitDisplay extends DisplayComponent
         this.label.setText("0");
         break;
       default:
-        System.out.println("get to def");
         this.label.setText("X");
         break;
     }

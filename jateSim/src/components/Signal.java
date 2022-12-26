@@ -84,13 +84,7 @@ public class Signal extends JPanel
 
   public void update()
   {
-    System.out.println("Signal inp: " + this.input.getValue());
-    System.out.println(this.input.parentSimComponent.getClass());
     this.input.setValue(this.output.getValue());
-    System.out.println("Signal out: " + this.output.getValue());
-    System.out.println(this.output.parentSimComponent.getClass());
-    this.output.label.setBackground(Color.blue);
-    this.input.label.setBackground(Color.red);
   }
 
   public static void updateSignals()

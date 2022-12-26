@@ -3,7 +3,6 @@ package components.displayComponents;
 import components.SimComponent;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 
 public class DisplayComponent extends SimComponent
