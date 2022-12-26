@@ -32,6 +32,7 @@ public class Gate extends SimComponent
     return this.output.getValue();
   }
 
+  @Override
   public void setLocation(int x, int y)
   {
     if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
@@ -42,6 +43,7 @@ public class Gate extends SimComponent
     this.input2.label.setBounds(a - Pin.size.width, b + size.height - Pin.size.height, Pin.size.width, Pin.size.height);
     this.output.label.setBounds(a + size.width, b + size.height / 2 - Pin.size.height / 2, Pin.size.width,
                                 Pin.size.height);
+    Signal.repositionSignals();
   }
 
   public void update()

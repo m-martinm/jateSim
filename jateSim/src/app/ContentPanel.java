@@ -12,7 +12,7 @@ public class ContentPanel extends JPanel
   {
     setBackground(Color.lightGray);
     setPreferredSize(size);
-    setBounds(this.getX(), this.getY(), size.width, size.height);
+    setBounds(0, ControlPanel.height, size.width, size.height);
     setLayout(null);
   }
 

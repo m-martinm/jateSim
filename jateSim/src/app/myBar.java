@@ -1,6 +1,9 @@
 package app;
 
+import components.displayComponents.DisplayComponent;
+import components.displayComponents.DisplayComponentType;
 import components.gates.GateType;
+import components.sourceComponents.SourceComponentType;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +17,10 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenuItem load = new JMenuItem("Load");
 
   JMenu edit = new JMenu("Edit");
+  JMenu addSourceComponent = new JMenu("Add source component");
+  JMenuItem switchSource = new JMenuItem("Switch");
+  JMenu addDisplayComponent = new JMenu("Add display component");
+  JMenuItem bitDisplay = new JMenuItem("Bit display");
   JMenu addGate = new JMenu("Add gate");
   JMenuItem AND = new JMenuItem("AND Gate");
   JMenuItem OR = new JMenuItem("OR Gate");
@@ -45,11 +52,15 @@ public class MyBar extends JMenuBar implements ActionListener
 
   private void initEdit()
   {
+    this.addSourceComponent.add(switchSource);
+    this.addDisplayComponent.add(bitDisplay);
     this.addGate.add(AND);
     this.addGate.add(OR);
     this.addGate.add(NAND);
     this.addGate.add(NOR);
     this.edit.add(addGate);
+    this.edit.add(addDisplayComponent);
+    this.edit.add(addSourceComponent);
   }
 
   private void initSimulate()
@@ -67,6 +78,8 @@ public class MyBar extends JMenuBar implements ActionListener
     NAND.addActionListener(this);
     OR.addActionListener(this);
     NOR.addActionListener(this);
+    bitDisplay.addActionListener(this);
+    switchSource.addActionListener(this);
     slow.addActionListener(this);
     start.addActionListener(this);
   }
@@ -86,6 +99,15 @@ public class MyBar extends JMenuBar implements ActionListener
         break;
       case "NOR Gate":
         Engine.addGate(GateType.NOR);
+        break;
+      case "Bit display":
+        Engine.addDisplayComponent(DisplayComponentType.BIT);
+        break;
+      case "Switch":
+        Engine.addSourceComponent(SourceComponentType.SWITCH);
+        break;
+      case "Start simulation":
+        Engine.tickClock(); //TODO this does not belong here just for test
         break;
       default:
         break;

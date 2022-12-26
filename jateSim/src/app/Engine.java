@@ -1,8 +1,13 @@
 package app;
 
 import components.*;
+import components.displayComponents.BitDisplay;
 import components.displayComponents.DisplayComponent;
+import components.displayComponents.DisplayComponentType;
 import components.gates.*;
+import components.sourceComponents.SourceComponent;
+import components.sourceComponents.SourceComponentType;
+import components.sourceComponents.SwitchSource;
 
 import javax.swing.*;
 
@@ -34,11 +39,11 @@ public class Engine
     frame.setVisible(true);
   }
 
-    public static void updateSize()
-    {
-      Rectangle r = frame.getContentPane().getBounds();
-      controlPanel.setBounds(0, 0, r.width, ControlPanel.height);
-    }
+  public static void updateSize()
+  {
+    Rectangle r = frame.getContentPane().getBounds();
+    controlPanel.setBounds(0, 0, r.width, ControlPanel.height);
+  }
 
   public static void setMode(Mode m)
   {
@@ -67,6 +72,30 @@ public class Engine
     contentPanel.repaint();
   }
 
+  public static void addDisplayComponent(DisplayComponentType type)
+  {
+    switch(type) {
+      case BIT:
+        new BitDisplay(50, 50, contentPanel);
+        break;
+      default:
+        break;
+    }
+    contentPanel.repaint();
+  }
+
+  public static void addSourceComponent(SourceComponentType type)
+  {
+    switch(type) {
+      case SWITCH:
+        new SwitchSource(50, 50, contentPanel);
+        break;
+      default:
+        break;
+    }
+    contentPanel.repaint();
+  }
+
   /*
   Update process
   1. update input pins using signal.update()
@@ -74,14 +103,20 @@ public class Engine
   3. update display components
   This is one clock tick
   This way u can only use synchronized systems with one clock
-  In the future create a clock component so you can give clock signals to different components
+  In the future create a clock component, so you can give clock signals to different components
    */
 
   public static void tickClock()
   {
+    for(SwitchSource s : SwitchSource.testArr)
+    {
+      System.out.println("SOURCE: " + s.output.getValue());
+    }
     Signal.updateSignals();
     Gate.updateGates();
+    Signal.updateSignals();
     DisplayComponent.updateDisplayComponents();
+    new SimNotification("Clock ticked"); // TODO remove
   }
 
   public static void startSimulation()

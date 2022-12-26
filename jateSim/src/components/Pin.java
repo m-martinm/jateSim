@@ -2,6 +2,7 @@ package components;
 
 import app.Engine;
 import app.Mode;
+import app.SimNotification;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,12 +80,12 @@ public class Pin extends SimComponent implements MouseListener
     } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
 
       if(!Signal.createSignal(selectedPin, this)) {
-        System.out.println("Already connected!");
+        new SimNotification("Pins are already connected!");
       } else selectedPin.deselectPin();
 
     } else if(selectedPin.type == PinType.OUTPUT && this.type == PinType.INPUT) {
       if(!Signal.createSignal(this, selectedPin)) {
-        System.out.println("Already connected!");
+        new SimNotification("Pins are already connected!");
       } else selectedPin.deselectPin();
 
     } else if(this == selectedPin) {

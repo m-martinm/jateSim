@@ -3,24 +3,29 @@ package components.displayComponents;
 import components.SimComponent;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 public class DisplayComponent extends SimComponent
 {
 
+  public static ArrayList<DisplayComponent> displayComponents = new ArrayList<>();
+
   public DisplayComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
     super(x, y, w, h, text, parentPanel);
-    //TODO implement
+    displayComponents.add(this);
   }
 
-  public static void update()
+  public void update()
   {
-    //TODO implement
   }
 
   public static void updateDisplayComponents()
   {
-    //TODO implement
+    for(DisplayComponent d : displayComponents) {
+      d.update();
+    }
   }
 
 }

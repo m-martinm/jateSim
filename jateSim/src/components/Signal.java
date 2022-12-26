@@ -1,6 +1,8 @@
 package components;
 
 import app.Engine;
+import app.SimNotification;
+import components.sourceComponents.SwitchSource;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +25,7 @@ public class Signal extends JPanel
     this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
     this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
     this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x, inputPoint.y - outputPoint.y);
-
+    //TODO don't need the points just call reposition();
     signals.add(this);
     setBounds(this.rect);
     setOpaque(false);
@@ -51,6 +53,24 @@ public class Signal extends JPanel
     return true;
   }
 
+  public void reposition()
+  {
+    this.rect.x = this.output.getX() + Pin.size.width;
+    this.rect.y = this.output.getY() + Pin.size.height / 2;
+    this.rect.width = this.input.getX() - this.rect.x;
+    this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
+    this.setBounds(this.rect);
+    this.repaint();
+  }
+
+  public static void repositionSignals()
+  {
+    for(Signal s : signals) {
+      //TODO this only works for specified position check where are the pins if(out.x > inp.x && ...)...
+      s.reposition();
+    }
+  }
+
   @Override
   public void paintComponent(Graphics g)
   {
@@ -64,7 +84,13 @@ public class Signal extends JPanel
 
   public void update()
   {
-    this.output.setValue(this.input.getValue());
+    System.out.println("Signal inp: " + this.input.getValue());
+    System.out.println(this.input.parentSimComponent.getClass());
+    this.input.setValue(this.output.getValue());
+    System.out.println("Signal out: " + this.output.getValue());
+    System.out.println(this.output.parentSimComponent.getClass());
+    this.output.label.setBackground(Color.blue);
+    this.input.label.setBackground(Color.red);
   }
 
   public static void updateSignals()

@@ -14,11 +14,12 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public JPanel parent;
   public JPopupMenu popupMenu;
   public JMenuItem remove = new JMenuItem("Remove component");
+
   //TODO add functionality to menu item
   //TODo change it to extends JLabel
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
-    this.label = new JLabel(text);
+    this.label = new JLabel(text, SwingConstants.CENTER);
     this.label.setBackground(Color.gray);
     this.label.setOpaque(true);
     this.label.setBounds(x, y, w, h);
@@ -70,7 +71,6 @@ public class SimComponent implements MouseListener, MouseMotionListener
       this.popupMenu.add(this.remove);
       this.popupMenu.show(this.parent, this.getX() + this.label.getWidth() / 2,
                           this.getY() + this.label.getHeight() / 2);
-      System.out.println(getRect().toString());
     }
 
   }
