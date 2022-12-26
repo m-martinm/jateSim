@@ -18,6 +18,7 @@
 
 # Package Files #
 *.jar
+!jateSim.jar
 *.war
 *.nar
 *.ear
