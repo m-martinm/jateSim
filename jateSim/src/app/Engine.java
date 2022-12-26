@@ -108,9 +108,9 @@ public class Engine
 
   public static void tickClock()
   {
-    Signal.updateSignals();
+    //    Signal.updateSignals(); // TODO maybe working without updating signals
     Gate.updateGates();
-    Signal.updateSignals();
+    //    Signal.updateSignals(); //TODO maybe working with one signal update
     DisplayComponent.updateDisplayComponents();
   }
 

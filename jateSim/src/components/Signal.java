@@ -3,12 +3,14 @@ package components;
 import app.Engine;
 import app.SimNotification;
 import components.sourceComponents.SwitchSource;
+import simNotifier.SimObservable;
+import simNotifier.SimObserver;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Signal extends JPanel
+public class Signal extends JPanel implements SimObserver
 {
   public static ArrayList<Signal> signals = new ArrayList<>();
 
@@ -21,6 +23,7 @@ public class Signal extends JPanel
   private Signal(Pin inp, Pin out)
   {
     this.input = inp;
+    out.value.addObserver(this); // TODO check if working
     this.output = out;
     this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
     this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
@@ -98,5 +101,11 @@ public class Signal extends JPanel
   {
     for(Signal s : signals)
       s.repaint();
+  }
+
+  @Override
+  public void updateObserver(SimObservable o, int data)
+  {
+    this.update();
   }
 }
