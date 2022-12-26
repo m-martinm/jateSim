@@ -10,6 +10,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+// TODO https://stackoverflow.com/questions/15433855/how-to-create-change-listener-for-variable
+// add a reference to its signal
+
 public class Pin extends SimComponent implements MouseListener
 {
   public static final int HIGH = 1;
@@ -41,6 +44,8 @@ public class Pin extends SimComponent implements MouseListener
 
   public void setValue(int newValue)
   {
+// TODO notify observers and make the signals observers
+// if its an output pin
     this.value = newValue;
   }
 
