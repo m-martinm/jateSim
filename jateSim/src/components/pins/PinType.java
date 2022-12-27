@@ -1,4 +1,4 @@
-package components;
+package components.pins;
 
 public enum PinType
 {

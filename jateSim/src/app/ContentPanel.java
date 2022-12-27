@@ -24,20 +24,12 @@ public class ContentPanel extends JPanel
   public void movePanel(KeyEvent e)
   {
     switch(e.getKeyCode()) {
-      case KeyEvent.VK_LEFT:
-        this.setLocation(this.getX() + 10, this.getY());
-        break;
-      case KeyEvent.VK_RIGHT:
-        this.setLocation(this.getX() - 10, this.getY());
-        break;
-      case KeyEvent.VK_DOWN:
-        this.setLocation(this.getX(), this.getY() - 10);
-        break;
-      case KeyEvent.VK_UP:
-        this.setLocation(this.getX(), this.getY() + 10);
-        break;
-      default:
-        break;
+      case KeyEvent.VK_LEFT -> this.setLocation(this.getX() + 10, this.getY());
+      case KeyEvent.VK_RIGHT -> this.setLocation(this.getX() - 10, this.getY());
+      case KeyEvent.VK_DOWN -> this.setLocation(this.getX(), this.getY() - 10);
+      case KeyEvent.VK_UP -> this.setLocation(this.getX(), this.getY() + 10);
+      default -> {
+      }
     }
 
   }

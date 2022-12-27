@@ -5,6 +5,9 @@ import javax.swing.*;
 import app.Engine;
 import app.Mode;
 import components.*;
+import components.pins.Pin;
+import components.pins.PinType;
+import components.signals.Signal;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -60,4 +63,12 @@ public class Gate extends SimComponent
     }
   }
 
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    this.input1.deleteComponent();
+    this.input2.deleteComponent();
+    this.output.deleteComponent();
+  }
 }

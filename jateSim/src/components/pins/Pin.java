@@ -1,8 +1,10 @@
-package components;
+package components.pins;
 
 import app.Engine;
 import app.Mode;
 import app.SimNotification;
+import components.SimComponent;
+import components.signals.Signal;
 import simNotifier.SimObservable;
 
 import javax.swing.*;
@@ -20,10 +22,11 @@ public class Pin extends SimComponent implements MouseListener
   public static ArrayList<Pin> pins = new ArrayList<>();
   public static Pin selectedPin = null;
 
-  SimObservable value;
-  SimComponent parentSimComponent;
-  PinType type;
+  public SimObservable value;
+  public SimComponent parentSimComponent;
+  public PinType type;
   boolean selected;
+  public ArrayList<Signal> connectedSignals= new ArrayList<>();
 
   public Pin(int x, int y, String text, JPanel parentPanel, SimComponent parentSimComponent, PinType type)
   {
@@ -70,6 +73,13 @@ public class Pin extends SimComponent implements MouseListener
   public void setLocation(int x, int y)
   {
 
+  }
+
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    if(this.type == PinType.OUTPUT) value.deleteObservers();
   }
 
   @Override

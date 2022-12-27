@@ -1,11 +1,14 @@
 package components;
 
 
+import components.signals.Signal;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 public class SimComponent implements MouseListener, MouseMotionListener
 {
@@ -13,6 +16,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public JPanel parent;
   public JPopupMenu popupMenu;
   public JMenuItem remove = new JMenuItem("Remove component");
+  public static ArrayList<SimComponent> allComponents = new ArrayList<>();
 
   //TODO add functionality to menu item
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
@@ -24,9 +28,10 @@ public class SimComponent implements MouseListener, MouseMotionListener
     this.label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     this.label.addMouseListener(this);
     this.label.addMouseMotionListener(this);
+    this.remove.addActionListener(e -> this.deleteComponent());
     this.parent = parentPanel;
     this.parent.add(this.label);
-
+    allComponents.add(this);
   }
 
   public Rectangle getRect()
@@ -59,6 +64,22 @@ public class SimComponent implements MouseListener, MouseMotionListener
 
   }
 
+  // always should call super.deleteComponent()
+  public void deleteComponent()
+  {
+    parent.remove(this.label);
+    parent.revalidate();
+    parent.repaint();
+  }
+
+  public static void deleteAllComponents()
+  {
+    for(SimComponent c : allComponents) {
+      c.deleteComponent();
+    }
+    Signal.deleteAllSignals();
+  }
+
   @Override
   public void mouseClicked(MouseEvent e)
   {
@@ -68,7 +89,6 @@ public class SimComponent implements MouseListener, MouseMotionListener
       this.popupMenu.show(this.parent, this.getX() + this.label.getWidth() / 2,
                           this.getY() + this.label.getHeight() / 2);
     }
-
   }
 
   @Override

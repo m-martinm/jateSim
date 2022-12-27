@@ -8,12 +8,19 @@ public class SimClock implements ActionListener
 {
   private final Timer timer;
   private int updateSpeed;
+  private boolean running;
 
   public SimClock(int updatesPerSecond)
   {
     this.updateSpeed = 1000 / updatesPerSecond;
     this.timer = new Timer(updateSpeed, this);
     this.timer.setRepeats(true);
+    this.running = false;
+  }
+
+  public boolean isRunning()
+  {
+    return this.running;
   }
 
   public void changeSpeed(int updatesPerSecond)
@@ -26,11 +33,13 @@ public class SimClock implements ActionListener
   public void start()
   {
     this.timer.start();
+    this.running = true;
   }
 
   public void stop()
   {
     this.timer.stop();
+    this.running = false;
   }
 
   @Override

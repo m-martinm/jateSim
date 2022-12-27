@@ -2,9 +2,9 @@ package components.displayComponents;
 
 import app.Engine;
 import app.Mode;
-import components.Pin;
-import components.PinType;
-import components.Signal;
+import components.pins.Pin;
+import components.pins.PinType;
+import components.signals.Signal;
 
 
 import javax.swing.*;
@@ -52,4 +52,10 @@ public class BitDisplay extends DisplayComponent
     }
   }
 
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    this.input.deleteComponent();
+  }
 }

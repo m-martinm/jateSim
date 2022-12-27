@@ -1,31 +1,37 @@
-package components;
+package components.signals;
 
 import app.Engine;
-import app.SimNotification;
-import components.sourceComponents.SwitchSource;
+import app.Mode;
+import components.pins.Pin;
+import components.pins.PinType;
 import simNotifier.SimObservable;
 import simNotifier.SimObserver;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class Signal extends JPanel implements SimObserver
+public class Signal extends JPanel implements SimObserver, MouseListener
 {
   public static ArrayList<Signal> signals = new ArrayList<>();
-  private static final int OFFSET = 1;
 
   public Rectangle rect;
   public Point inputPoint;
   public Point outputPoint;
-  Pin input;
-  Pin output;
+  public Pin input;
+  public Pin output;
+  private SignalDrawingMethod drawingMethod;
 
   private Signal(Pin inp, Pin out)
   {
+    this.drawingMethod = SignalDrawingMethod.STARIGHT;
     this.input = inp;
     out.value.addObserver(this);
     this.output = out;
+    inp.connectedSignals.add(this);
+    out.connectedSignals.add(this);
     this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
     this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
     this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x, inputPoint.y - outputPoint.y);
@@ -33,18 +39,9 @@ public class Signal extends JPanel implements SimObserver
     signals.add(this);
     setBounds(this.rect);
     setOpaque(false);
+    addMouseListener(this);
     Engine.contentPanel.add(this);
-    this.repaint();
-  }
-
-  public void getInfo()
-  {
-    System.out.println("-----  " + this + "  -----");
-    System.out.println("rect: " + this.rect);
-    System.out.println("Inp: " + this.inputPoint + " Out: " + this.outputPoint);
-    System.out.println("Input pin x,y  " + this.input.getX() + "  " + this.input.getY());
-    System.out.println("Output pin x,y  " + this.output.getX() + "  " + this.output.getY());
-    System.out.println("Visible rect: " + this.getVisibleRect());
+    repaint();
   }
 
   public static boolean createSignal(Pin inp, Pin out)
@@ -97,13 +94,53 @@ public class Signal extends JPanel implements SimObserver
       g2.setColor(Color.green);
     } else g2.setColor(Color.blue);
     if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
-      g2.drawLine(0, 0, getWidth(), getHeight());
+      switch(this.drawingMethod) {
+        case STARIGHT -> g2.drawLine(0, 0, getWidth(), getHeight());
+        case UPPER -> {
+          g2.drawLine(0, 0, getWidth(), 0);
+          g2.drawLine(getWidth(), 0, getWidth(), getHeight());
+        }
+        case LOWER -> {
+          g2.drawLine(0, 0, 0, getHeight());
+          g2.drawLine(0, getHeight(), getWidth(), getHeight());
+        }
+      }
     } else if(outputPoint.x < inputPoint.x && outputPoint.y > inputPoint.y) {
-      g2.drawLine(0, getHeight(), getWidth(), 0);
+      switch(this.drawingMethod) {
+        case STARIGHT -> g2.drawLine(0, getHeight(), getWidth(), 0);
+        case UPPER -> {
+          g2.drawLine(0, getHeight(), 0, 0);
+          g2.drawLine(0, 0, getWidth(), 0);
+        }
+        case LOWER -> {
+          g2.drawLine(0, getHeight(), getWidth(), getHeight());
+          g2.drawLine(getWidth(), getHeight(), getWidth(), 0);
+        }
+      }
     } else if(outputPoint.x > inputPoint.x && outputPoint.y < inputPoint.y) {
-      g2.drawLine(0, getHeight(), getWidth(), 0);
+      switch(this.drawingMethod) {
+        case STARIGHT -> g2.drawLine(0, getHeight(), getWidth(), 0);
+        case UPPER -> {
+          g2.drawLine(0, getHeight(), 0, 0);
+          g2.drawLine(0, 0, getWidth(), 0);
+        }
+        case LOWER -> {
+          g2.drawLine(0, getHeight(), getWidth(), getHeight());
+          g2.drawLine(getWidth(), getHeight(), getWidth(), 0);
+        }
+      }
     } else if(outputPoint.x > inputPoint.x && outputPoint.y > inputPoint.y) {
-      g2.drawLine(0, 0, getWidth(), getHeight());
+      switch(this.drawingMethod) {
+        case STARIGHT -> g2.drawLine(0, 0, getWidth(), getHeight());
+        case UPPER -> {
+          g2.drawLine(0, 0, getWidth(), 0);
+          g2.drawLine(getWidth(), 0, getWidth(), getHeight());
+        }
+        case LOWER -> {
+          g2.drawLine(0, 0, 0, getHeight());
+          g2.drawLine(0, getHeight(), getWidth(), getHeight());
+        }
+      }
     }
 
   }
@@ -114,6 +151,21 @@ public class Signal extends JPanel implements SimObserver
     repaint();
   }
 
+  public void deleteSignal()
+  {
+    Engine.contentPanel.remove(this);
+    Engine.contentPanel.revalidate();
+    Engine.contentPanel.repaint();
+  }
+
+  public static void deleteAllSignals()
+  {
+    for(Signal s : signals) {
+      s.deleteSignal();
+    }
+  }
+
+  @Deprecated
   public static void updateSignals()
   {
     for(Signal s : signals) {
@@ -121,6 +173,7 @@ public class Signal extends JPanel implements SimObserver
     }
   }
 
+  @Deprecated
   public static void repaintSignals()
   {
     for(Signal s : signals)
@@ -131,5 +184,42 @@ public class Signal extends JPanel implements SimObserver
   public void updateObserver(SimObservable o, int data)
   {
     this.update();
+  }
+
+  @Override
+  public void mouseClicked(MouseEvent e)
+  {
+    if(Engine.mode == Mode.CONNECT && e.getButton() == MouseEvent.BUTTON3) {
+      switch(this.drawingMethod) {
+        case LOWER -> this.drawingMethod = SignalDrawingMethod.UPPER;
+        case UPPER -> this.drawingMethod = SignalDrawingMethod.STARIGHT;
+        case STARIGHT -> this.drawingMethod = SignalDrawingMethod.LOWER;
+      }
+      repaint();
+    }
+  }
+
+  @Override
+  public void mousePressed(MouseEvent e)
+  {
+
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent e)
+  {
+
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent e)
+  {
+
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e)
+  {
+
   }
 }

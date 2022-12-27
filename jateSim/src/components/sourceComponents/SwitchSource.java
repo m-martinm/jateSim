@@ -2,7 +2,9 @@ package components.sourceComponents;
 
 import app.Engine;
 import app.Mode;
-import components.*;
+import components.pins.Pin;
+import components.pins.PinType;
+import components.signals.Signal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,4 +65,10 @@ public class SwitchSource extends SourceComponent
     if(e.getButton() == MouseEvent.BUTTON1) this.update();
   }
 
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    this.output.deleteComponent();
+  }
 }

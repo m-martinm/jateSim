@@ -54,21 +54,22 @@ public class Engine
 
   public static void addGate(GateType type)
   {
+    Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case AND:
-        new AndGate(50, 50, contentPanel);
+        new AndGate(r.width/2, r.height/2, contentPanel);
         break;
       case OR:
-        new OrGate(50, 50, contentPanel);
+        new OrGate(r.width/2, r.height/2, contentPanel);
         break;
       case NAND:
-        new NandGate(50, 50, contentPanel);
+        new NandGate(r.width/2, r.height/2, contentPanel);
         break;
       case NOR:
-        new NorGate(50, 50, contentPanel);
+        new NorGate(r.width/2, r.height/2, contentPanel);
         break;
       case NOT:
-        new NotGate(50, 50, contentPanel);
+        new NotGate(r.width/2, r.height/2, contentPanel);
         break;
       default:
         break;
@@ -78,9 +79,10 @@ public class Engine
 
   public static void addDisplayComponent(DisplayComponentType type)
   {
+    Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case BIT:
-        new BitDisplay(50, 50, contentPanel);
+        new BitDisplay(r.width/2, r.height/2, contentPanel);
         break;
       default:
         break;
@@ -90,14 +92,20 @@ public class Engine
 
   public static void addSourceComponent(SourceComponentType type)
   {
+    Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case SWITCH:
-        new SwitchSource(50, 50, contentPanel);
+        new SwitchSource(r.width/2, r.height/2, contentPanel);
         break;
       default:
         break;
     }
     contentPanel.repaint();
+  }
+
+  public static void removeEverything()
+  {
+    SimComponent.deleteAllComponents();
   }
 
   /*

@@ -1,6 +1,6 @@
 package components.gates;
 
-import components.Pin;
+import components.pins.Pin;
 
 import javax.swing.*;
 
