@@ -1,5 +1,7 @@
 package components.gates;
 
+import components.Pin;
+
 import javax.swing.*;
 
 public class OrGate extends Gate
@@ -11,6 +13,21 @@ public class OrGate extends Gate
 
   public void update()
   {
-    /* TODO implement */
+    if(this.input1.getValue() == Pin.UNKNOWN || this.input2.getValue() == Pin.UNKNOWN) {
+      this.output.setValue(Pin.UNKNOWN);
+    } else {
+      int tmp = this.input1.getValue() | this.input2.getValue();
+      switch(tmp) {
+        case Pin.LOW:
+          this.output.setValue(Pin.HIGH);
+          break;
+        case Pin.HIGH:
+          this.output.setValue(Pin.LOW);
+          break;
+        default:
+          this.output.setValue(Pin.UNKNOWN);
+          break;
+      }
+    }
   }
 }

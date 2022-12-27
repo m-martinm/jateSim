@@ -1,5 +1,6 @@
 package components;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -55,9 +56,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
 
   public void setLocation(int x, int y)
   {
-    if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
-    this.label.setBounds(x - this.label.getWidth() / 2, y - this.label.getHeight() / 2, this.label.getWidth(),
-                         this.label.getHeight());
+
   }
 
   @Override

@@ -22,6 +22,7 @@ public class Engine
   public static ContentPanel contentPanel = new ContentPanel();
   public static ControlPanel controlPanel = new ControlPanel();
   public static Mode mode = Mode.DEFAULT;
+  public static SimClock clock = new SimClock(1);
 
   public Engine(int width, int height)
   {
@@ -66,6 +67,9 @@ public class Engine
       case NOR:
         new NorGate(50, 50, contentPanel);
         break;
+      case NOT:
+        new NotGate(50, 50, contentPanel);
+        break;
       default:
         break;
     }
@@ -106,21 +110,21 @@ public class Engine
   In the future create a clock component, so you can give clock signals to different components
    */
 
-  public static void tickClock()
+  public static void updateCycle()
   {
-    Signal.updateSignals();
     Gate.updateGates();
-    Signal.updateSignals();
     DisplayComponent.updateDisplayComponents();
   }
 
   public static void startSimulation()
   {
-    //TODO implement
+    new SimNotification("Simulation started!", true);
+    clock.start();
   }
 
-  public static void endSimulation()
+  public static void stopSimulation()
   {
-    //TODO implement
+    new SimNotification("Simulation ended!", true);
+    clock.stop();
   }
 }

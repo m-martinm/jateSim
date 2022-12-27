@@ -25,12 +25,16 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenuItem OR = new JMenuItem("OR Gate");
   JMenuItem NAND = new JMenuItem("NAND Gate");
   JMenuItem NOR = new JMenuItem("NOR Gate");
-
+  JMenuItem NOT = new JMenuItem("NOT Gate");
 
   JMenu simulate = new JMenu("Simulate");
   JMenuItem start = new JMenuItem("Start simulation");
+  JMenuItem stop = new JMenuItem("Stop simulation");
   JMenu setSpeed = new JMenu("Set clock speed");
-  JMenuItem slow = new JMenuItem("1/8");
+  JMenuItem oneEight = new JMenuItem("1/8");
+  JMenuItem oneFour = new JMenuItem("1/4");
+  JMenuItem oneTwo = new JMenuItem("1/2");
+  JMenuItem oneOne = new JMenuItem("1/1");
 
   public MyBar()
   {
@@ -57,6 +61,7 @@ public class MyBar extends JMenuBar implements ActionListener
     this.addGate.add(OR);
     this.addGate.add(NAND);
     this.addGate.add(NOR);
+    this.addGate.add(NOT);
     this.edit.add(addGate);
     this.edit.add(addDisplayComponent);
     this.edit.add(addSourceComponent);
@@ -64,9 +69,13 @@ public class MyBar extends JMenuBar implements ActionListener
 
   private void initSimulate()
   {
-    this.setSpeed.add(slow);
-    this.simulate.add(setSpeed);
+    this.setSpeed.add(oneOne);
+    this.setSpeed.add(oneTwo);
+    this.setSpeed.add(oneFour);
+    this.setSpeed.add(oneEight);
     this.simulate.add(start);
+    this.simulate.add(stop);
+    this.simulate.add(setSpeed);
   }
 
   private void addListeners()
@@ -77,10 +86,15 @@ public class MyBar extends JMenuBar implements ActionListener
     NAND.addActionListener(this);
     OR.addActionListener(this);
     NOR.addActionListener(this);
+    NOT.addActionListener(this);
     bitDisplay.addActionListener(this);
     switchSource.addActionListener(this);
-    slow.addActionListener(this);
+    oneOne.addActionListener(this);
+    oneTwo.addActionListener(this);
+    oneFour.addActionListener(this);
+    oneEight.addActionListener(this);
     start.addActionListener(this);
+    stop.addActionListener(this);
   }
 
   @Override
@@ -99,6 +113,9 @@ public class MyBar extends JMenuBar implements ActionListener
       case "NOR Gate":
         Engine.addGate(GateType.NOR);
         break;
+      case "NOT Gate":
+        Engine.addGate(GateType.NOT);
+        break;
       case "Bit display":
         Engine.addDisplayComponent(DisplayComponentType.BIT);
         break;
@@ -106,7 +123,22 @@ public class MyBar extends JMenuBar implements ActionListener
         Engine.addSourceComponent(SourceComponentType.SWITCH);
         break;
       case "Start simulation":
-        Engine.tickClock(); //TODO this does not belong here just for test
+        Engine.startSimulation();
+        break;
+      case "Stop simulation":
+        Engine.stopSimulation();
+        break;
+      case "1/1":
+        Engine.clock.changeSpeed(1);
+        break;
+      case "1/2":
+        Engine.clock.changeSpeed(2);
+        break;
+      case "1/4":
+        Engine.clock.changeSpeed(4);
+        break;
+      case "1/8":
+        Engine.clock.changeSpeed(8);
         break;
       default:
         break;

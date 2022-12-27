@@ -1,5 +1,7 @@
 package components.sourceComponents;
 
+import app.Engine;
+import app.Mode;
 import components.*;
 
 import javax.swing.*;
@@ -21,6 +23,7 @@ public class SwitchSource extends SourceComponent
   @Override
   public void setLocation(int x, int y)
   {
+    if(Engine.mode != Mode.MOVE) return;
     if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
     int a = x - this.label.getWidth() / 2;
     int b = y - this.label.getHeight() / 2;
@@ -34,14 +37,20 @@ public class SwitchSource extends SourceComponent
   public void update()
   {
     switch(this.output.getValue()) {
-      case 1, -1:
-        this.output.setValue(Pin.LOW);
-        this.label.setText("S(0)");
+      case Pin.HIGH:
+        this.output.setValue(Pin.UNKNOWN);
+        this.label.setText("S(X)");
+        this.label.setBackground(Color.gray);
         break;
-      case 0:
+      case Pin.LOW:
         this.output.setValue(Pin.HIGH);
         this.label.setText("S(1)");
+        this.label.setBackground(Color.green);
         break;
+      case Pin.UNKNOWN:
+        this.output.setValue(Pin.LOW);
+        this.label.setText("S(0)");
+        this.label.setBackground(Color.RED);
       default:
         break;
     }
