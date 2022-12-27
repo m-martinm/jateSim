@@ -25,7 +25,7 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenuItem OR = new JMenuItem("OR Gate");
   JMenuItem NAND = new JMenuItem("NAND Gate");
   JMenuItem NOR = new JMenuItem("NOR Gate");
-
+  JMenuItem NOT = new JMenuItem("NOT Gate");
 
   JMenu simulate = new JMenu("Simulate");
   JMenuItem start = new JMenuItem("Start simulation");
@@ -61,6 +61,7 @@ public class MyBar extends JMenuBar implements ActionListener
     this.addGate.add(OR);
     this.addGate.add(NAND);
     this.addGate.add(NOR);
+    this.addGate.add(NOT);
     this.edit.add(addGate);
     this.edit.add(addDisplayComponent);
     this.edit.add(addSourceComponent);
@@ -85,6 +86,7 @@ public class MyBar extends JMenuBar implements ActionListener
     NAND.addActionListener(this);
     OR.addActionListener(this);
     NOR.addActionListener(this);
+    NOT.addActionListener(this);
     bitDisplay.addActionListener(this);
     switchSource.addActionListener(this);
     oneOne.addActionListener(this);
@@ -110,6 +112,9 @@ public class MyBar extends JMenuBar implements ActionListener
         break;
       case "NOR Gate":
         Engine.addGate(GateType.NOR);
+        break;
+      case "NOT Gate":
+        Engine.addGate(GateType.NOT);
         break;
       case "Bit display":
         Engine.addDisplayComponent(DisplayComponentType.BIT);

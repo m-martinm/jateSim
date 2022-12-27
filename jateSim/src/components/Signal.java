@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Signal extends JPanel implements SimObserver
 {
   public static ArrayList<Signal> signals = new ArrayList<>();
+  private static final int OFFSET = 1;
 
   public Rectangle rect;
   public Point inputPoint;
@@ -28,10 +29,10 @@ public class Signal extends JPanel implements SimObserver
     this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
     this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
     this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x, inputPoint.y - outputPoint.y);
-    //TODO don't need the points just call reposition();
+    reposition();
     signals.add(this);
     setBounds(this.rect);
-    setOpaque(true); //TODO change
+    setOpaque(false);
     Engine.contentPanel.add(this);
     this.repaint();
   }
@@ -58,29 +59,29 @@ public class Signal extends JPanel implements SimObserver
 
   public void reposition()
   {
-    if(this.output.getX() < this.input.getX() && this.output.getY() < this.input.getY()) {
-      this.rect.x = this.output.getX() + Pin.size.width;
-      this.rect.y = this.output.getY() + Pin.size.height / 2;
-      this.rect.width = this.input.getX() - this.rect.x;
-      this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
-    } else if(this.output.getX() < this.input.getX() && this.output.getY() > this.input.getY()) {
-      this.rect.x = this.output.getX() + Pin.size.width;
-      this.rect.y = this.output.getY() + Pin.size.height / 2 - this.input.getY() - this.input.getY();
-      this.rect.width = this.input.getX() - this.rect.x;
-      this.rect.height = this.input.getY() + Pin.size.height / 2 - this.rect.y;
-    } else if(this.output.getX() > this.input.getX() && this.output.getY() < this.input.getY()) {
-
-    } else if(this.output.getX() > this.input.getX() && this.output.getY() > this.input.getY()) {
-
+    this.inputPoint.x = this.input.getX();
+    this.inputPoint.y = this.input.getY() + Pin.size.height / 2;
+    this.outputPoint.x = this.output.getX() + Pin.size.width;
+    this.outputPoint.y = this.output.getY() + Pin.size.height / 2;
+    if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
+      this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x,
+                                inputPoint.y - outputPoint.y);
+    } else if(outputPoint.x < inputPoint.x && outputPoint.y > inputPoint.y) {
+      this.rect = new Rectangle(outputPoint.x, inputPoint.y, inputPoint.x - outputPoint.x,
+                                outputPoint.y - inputPoint.y);
+    } else if(outputPoint.x > inputPoint.x && outputPoint.y < inputPoint.y) {
+      this.rect = new Rectangle(inputPoint.x, outputPoint.y, outputPoint.x - inputPoint.x,
+                                inputPoint.y - outputPoint.y);
+    } else if(outputPoint.x > inputPoint.x && outputPoint.y > inputPoint.y) {
+      this.rect = new Rectangle(inputPoint.x, inputPoint.y, outputPoint.x - inputPoint.x, outputPoint.y - inputPoint.y);
     }
-    this.setBounds(this.rect);
-    this.repaint();
+    setBounds(this.rect);
+    repaint();
   }
 
   public static void repositionSignals()
   {
     for(Signal s : signals) {
-      //TODO this only works for specified position check where are the pins if(out.x > inp.x && ...)...
       s.reposition();
     }
   }
@@ -91,14 +92,26 @@ public class Signal extends JPanel implements SimObserver
     super.paintComponent(g);
 
     Graphics2D g2 = (Graphics2D) g;
-    g2.setStroke(new BasicStroke(3));
-    g2.setColor(Color.blue);
-    g2.drawLine(0, 0, getWidth(), getHeight());
+    g2.setStroke(new BasicStroke(2));
+    if(this.output.getValue() == Pin.HIGH) {
+      g2.setColor(Color.green);
+    } else g2.setColor(Color.blue);
+    if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
+      g2.drawLine(0, 0, getWidth(), getHeight());
+    } else if(outputPoint.x < inputPoint.x && outputPoint.y > inputPoint.y) {
+      g2.drawLine(0, getHeight(), getWidth(), 0);
+    } else if(outputPoint.x > inputPoint.x && outputPoint.y < inputPoint.y) {
+      g2.drawLine(0, getHeight(), getWidth(), 0);
+    } else if(outputPoint.x > inputPoint.x && outputPoint.y > inputPoint.y) {
+      g2.drawLine(0, 0, getWidth(), getHeight());
+    }
+
   }
 
   public void update()
   {
     this.input.setValue(this.output.getValue());
+    repaint();
   }
 
   public static void updateSignals()

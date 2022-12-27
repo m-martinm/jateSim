@@ -1,7 +1,5 @@
 package components;
 
-import app.Engine;
-import app.Mode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,7 +56,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
 
   public void setLocation(int x, int y)
   {
-   
+
   }
 
   @Override

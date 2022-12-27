@@ -67,6 +67,9 @@ public class Engine
       case NOR:
         new NorGate(50, 50, contentPanel);
         break;
+      case NOT:
+        new NotGate(50, 50, contentPanel);
+        break;
       default:
         break;
     }
