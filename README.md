@@ -5,4 +5,4 @@ A logic gates simulator (hopefully more in the future), the goal is to be able t
 
 ## Current state
 
-The software can run a simple logical circut with two switches, an AND gate and display the output.
+The software can run simple logical circuts with different types of gates (see demo gif).
