@@ -41,28 +41,28 @@ public class FrameListener implements ComponentListener, KeyListener
   {
     if(Engine.mode == Mode.MOVE) Engine.contentPanel.movePanel(e);
     switch(e.getKeyChar()) {
-      case 'M' -> {
+      case 'M':
         if(Engine.mode == Mode.MOVE) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.MOVE);
         Pin.deselectAll();
-      }
-      case 'D' -> {
+        break;
+      case 'D':
         Engine.setMode(Mode.DEFAULT);
         Pin.deselectAll();
-      }
-      case 'C' -> {
+        break;
+      case 'C':
         if(Engine.mode == Mode.CONNECT) {
           Engine.setMode(Mode.DEFAULT);
           Pin.deselectAll();
         } else Engine.setMode(Mode.CONNECT);
-      }
-      case 'S' -> {
+        break;
+      case 'S':
         if(Engine.mode == Mode.SELECT) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.SELECT);
         Pin.deselectAll();
-      }
-      default -> {
-      }
+        break;
+      default:
+        break;
     }
   }
 

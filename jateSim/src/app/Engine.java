@@ -5,7 +5,6 @@ import components.displayComponents.BitDisplay;
 import components.displayComponents.DisplayComponent;
 import components.displayComponents.DisplayComponentType;
 import components.gates.*;
-import components.sourceComponents.SourceComponent;
 import components.sourceComponents.SourceComponentType;
 import components.sourceComponents.SwitchSource;
 

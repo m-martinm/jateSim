@@ -2,5 +2,5 @@ package components.signals;
 
 public enum SignalDrawingMethod
 {
-  UPPER, LOWER, STARIGHT
+  UPPER, LOWER, STRAIGHT
 }

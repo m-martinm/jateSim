@@ -1,6 +1,5 @@
 package app;
 
-import components.displayComponents.DisplayComponent;
 import components.displayComponents.DisplayComponentType;
 import components.gates.GateType;
 import components.sourceComponents.SourceComponentType;

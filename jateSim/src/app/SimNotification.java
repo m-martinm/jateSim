@@ -46,7 +46,7 @@ public class SimNotification implements ActionListener
   public SimNotification(String message, boolean permanent)
   {
     if(notifications.size() != 0) closeAll();
-    if(false) new SimNotification(message);
+    if(!permanent) new SimNotification(message);
     else {
       notifications.add(this);
       this.textArea = new JTextArea(2, 30);

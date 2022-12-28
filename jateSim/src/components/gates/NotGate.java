@@ -22,9 +22,15 @@ public class NotGate extends Gate
       this.output.setValue(Pin.UNKNOWN);
     } else {
       switch(this.input1.getValue()) {
-        case Pin.HIGH -> this.output.setValue(Pin.LOW);
-        case Pin.LOW -> this.output.setValue(Pin.HIGH);
-        default -> this.output.setValue(Pin.UNKNOWN);
+        case Pin.HIGH:
+          this.output.setValue(Pin.LOW);
+          break;
+        case Pin.LOW:
+          this.output.setValue(Pin.HIGH);
+          break;
+        default:
+          this.output.setValue(Pin.UNKNOWN);
+          break;
       }
     }
   }

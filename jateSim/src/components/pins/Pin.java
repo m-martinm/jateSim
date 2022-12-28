@@ -70,12 +70,6 @@ public class Pin extends SimComponent implements MouseListener
   }
 
   @Override
-  public void setLocation(int x, int y)
-  {
-
-  }
-
-  @Override
   public void deleteComponent()
   {
     super.deleteComponent();

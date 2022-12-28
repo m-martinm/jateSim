@@ -26,7 +26,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
 
   private Signal(Pin inp, Pin out)
   {
-    this.drawingMethod = SignalDrawingMethod.STARIGHT;
+    this.drawingMethod = SignalDrawingMethod.STRAIGHT;
     this.input = inp;
     out.value.addObserver(this);
     this.output = out;
@@ -44,6 +44,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
     repaint();
   }
 
+  @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public static boolean createSignal(Pin inp, Pin out)
   {
     if(inp.type != PinType.INPUT && out.type != PinType.OUTPUT) return false;
@@ -95,55 +96,71 @@ public class Signal extends JPanel implements SimObserver, MouseListener
     } else g2.setColor(Color.blue);
     if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
       switch(this.drawingMethod) {
-        case STARIGHT -> g2.drawLine(0, 0, getWidth(), getHeight());
-        case UPPER -> {
+        case STRAIGHT:
+          g2.drawLine(0, 0, getWidth(), getHeight());
+          break;
+        case UPPER:
           g2.drawLine(0, 0, getWidth(), 0);
           g2.drawLine(getWidth(), 0, getWidth(), getHeight());
-        }
-        case LOWER -> {
+          break;
+        case LOWER:
           g2.drawLine(0, 0, 0, getHeight());
           g2.drawLine(0, getHeight(), getWidth(), getHeight());
-        }
+          break;
+        default:
+          break;
       }
     } else if(outputPoint.x < inputPoint.x && outputPoint.y > inputPoint.y) {
       switch(this.drawingMethod) {
-        case STARIGHT -> g2.drawLine(0, getHeight(), getWidth(), 0);
-        case UPPER -> {
+        case STRAIGHT:
+          g2.drawLine(0, getHeight(), getWidth(), 0);
+          break;
+        case UPPER:
           g2.drawLine(0, getHeight(), 0, 0);
           g2.drawLine(0, 0, getWidth(), 0);
-        }
-        case LOWER -> {
+          break;
+        case LOWER:
           g2.drawLine(0, getHeight(), getWidth(), getHeight());
           g2.drawLine(getWidth(), getHeight(), getWidth(), 0);
-        }
+          break;
+        default:
+          break;
       }
     } else if(outputPoint.x > inputPoint.x && outputPoint.y < inputPoint.y) {
       switch(this.drawingMethod) {
-        case STARIGHT -> g2.drawLine(0, getHeight(), getWidth(), 0);
-        case UPPER -> {
+        case STRAIGHT:
+          g2.drawLine(0, getHeight(), getWidth(), 0);
+          break;
+        case UPPER:
           g2.drawLine(0, getHeight(), 0, 0);
           g2.drawLine(0, 0, getWidth(), 0);
-        }
-        case LOWER -> {
+          break;
+        case LOWER:
           g2.drawLine(0, getHeight(), getWidth(), getHeight());
           g2.drawLine(getWidth(), getHeight(), getWidth(), 0);
-        }
+          break;
+        default:
+          break;
       }
     } else if(outputPoint.x > inputPoint.x && outputPoint.y > inputPoint.y) {
       switch(this.drawingMethod) {
-        case STARIGHT -> g2.drawLine(0, 0, getWidth(), getHeight());
-        case UPPER -> {
+        case STRAIGHT:
+          g2.drawLine(0, 0, getWidth(), getHeight());
+          break;
+        case UPPER:
           g2.drawLine(0, 0, getWidth(), 0);
           g2.drawLine(getWidth(), 0, getWidth(), getHeight());
-        }
-        case LOWER -> {
+          break;
+        case LOWER:
           g2.drawLine(0, 0, 0, getHeight());
           g2.drawLine(0, getHeight(), getWidth(), getHeight());
-        }
+          break;
+        default:
+          break;
       }
     }
-
   }
+
 
   public void update()
   {
@@ -191,9 +208,12 @@ public class Signal extends JPanel implements SimObserver, MouseListener
   {
     if(Engine.mode == Mode.CONNECT && e.getButton() == MouseEvent.BUTTON3) {
       switch(this.drawingMethod) {
-        case LOWER -> this.drawingMethod = SignalDrawingMethod.UPPER;
-        case UPPER -> this.drawingMethod = SignalDrawingMethod.STARIGHT;
-        case STARIGHT -> this.drawingMethod = SignalDrawingMethod.LOWER;
+        case LOWER: this.drawingMethod = SignalDrawingMethod.UPPER;
+        break;
+        case UPPER: this.drawingMethod = SignalDrawingMethod.STRAIGHT;
+        break;
+        case STRAIGHT: this.drawingMethod = SignalDrawingMethod.LOWER;
+        break;
       }
       repaint();
     }

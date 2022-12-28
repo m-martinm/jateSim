@@ -18,7 +18,6 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public JMenuItem remove = new JMenuItem("Remove component");
   public static ArrayList<SimComponent> allComponents = new ArrayList<>();
 
-  //TODO add functionality to menu item
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
     this.label = new JLabel(text, SwingConstants.CENTER);
