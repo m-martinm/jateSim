@@ -67,6 +67,7 @@ public class Gate extends SimComponent
   public void deleteComponent()
   {
     super.deleteComponent();
+    gates.remove(this);
     this.input1.deleteComponent();
     this.input2.deleteComponent();
     this.output.deleteComponent();

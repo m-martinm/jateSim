@@ -73,6 +73,10 @@ public class Pin extends SimComponent implements MouseListener
   public void deleteComponent()
   {
     super.deleteComponent();
+    for(Signal s : this.connectedSignals){
+      s.deleteSignal();
+    }
+    pins.remove(this);
     if(this.type == PinType.OUTPUT) value.deleteObservers();
   }
 

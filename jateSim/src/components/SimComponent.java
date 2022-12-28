@@ -1,7 +1,12 @@
 package components;
 
 
+import components.displayComponents.DisplayComponent;
+import components.gates.Gate;
+import components.pins.Pin;
 import components.signals.Signal;
+import components.sourceComponents.SourceComponent;
+import simUtils.SimLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,7 +32,16 @@ public class SimComponent implements MouseListener, MouseMotionListener
     this.label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     this.label.addMouseListener(this);
     this.label.addMouseMotionListener(this);
-    this.remove.addActionListener(e -> this.deleteComponent());
+    this.remove.addActionListener((e) -> {
+      this.deleteComponent();
+      System.out.println("remaining gates: " + Gate.gates.size()); //TODO remove these
+      System.out.println("remaining pins: " + Pin.pins.size());
+      System.out.println("displays: " + DisplayComponent.displayComponents.size());
+      System.out.println("sources: " + SourceComponent.sourceComponents.size());
+      SimLogger.log("Overall components: " + SimComponent.allComponents.size());
+      SimLogger.log("Overall signals: " + Signal.signals.size());
+      System.out.println("------------------------------");
+    });
     this.parent = parentPanel;
     this.parent.add(this.label);
     allComponents.add(this);
@@ -67,6 +81,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public void deleteComponent()
   {
     parent.remove(this.label);
+    allComponents.remove(this);
     parent.revalidate();
     parent.repaint();
   }

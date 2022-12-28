@@ -69,6 +69,7 @@ public class SwitchSource extends SourceComponent
   public void deleteComponent()
   {
     super.deleteComponent();
+    SourceComponent.sourceComponents.remove(this);
     this.output.deleteComponent();
   }
 }

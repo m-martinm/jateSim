@@ -171,6 +171,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
   public void deleteSignal()
   {
     Engine.contentPanel.remove(this);
+    signals.remove(this);
     Engine.contentPanel.revalidate();
     Engine.contentPanel.repaint();
   }

@@ -7,6 +7,7 @@
 - implement "BlackBox"
     - puts the selected components to a blackbox and displays it as a box
 - add option to remove a signal
+- removing a component does not remove the signals
 - latches for example are not working
-    - probably tracing back does not work becase gates are initially unknown
+    - probably tracing back does not work because gates are initially unknown
     - maybe initialize pins with low?

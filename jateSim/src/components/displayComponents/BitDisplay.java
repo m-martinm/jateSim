@@ -56,6 +56,7 @@ public class BitDisplay extends DisplayComponent
   public void deleteComponent()
   {
     super.deleteComponent();
+    DisplayComponent.displayComponents.remove(this);
     this.input.deleteComponent();
   }
 }

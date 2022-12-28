@@ -7,6 +7,7 @@ import components.displayComponents.DisplayComponentType;
 import components.gates.*;
 import components.sourceComponents.SourceComponentType;
 import components.sourceComponents.SwitchSource;
+import simUtils.SimLogger;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -57,8 +58,8 @@ public class Engine
 
   private static void runApp()
   {
+    SimLogger.turnOn(true);
     new Engine(800, 800);
-
   }
 
   public static void updateSize()
