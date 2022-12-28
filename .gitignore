@@ -4,6 +4,8 @@
 *.iml
 .classpath
 .project
+release
+release.zip
 
 # Compiled class file
 *.class
