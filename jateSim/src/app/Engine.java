@@ -40,7 +40,6 @@ public class Engine
       frame.setIconImage(ImageIO.read(new File("res/icon.png")));
     } catch(IOException e) {
       System.out.println("Couldn't load icon.");
-      System.out.println(Paths.get("").toAbsolutePath());
     }
     frame.setLayout(null);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
