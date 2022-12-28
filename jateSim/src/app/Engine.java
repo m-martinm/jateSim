@@ -39,6 +39,12 @@ public class Engine
     frame.setVisible(true);
   }
 
+  public static void main(String[] args)
+  {
+
+    new Engine(800, 800);
+  }
+
   public static void updateSize()
   {
     Rectangle r = frame.getContentPane().getBounds();
