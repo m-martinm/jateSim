@@ -15,6 +15,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class Engine
@@ -35,9 +37,10 @@ public class Engine
   public Engine(int width, int height)
   {
     try {
-      frame.setIconImage(ImageIO.read(new File("jateSim/src/res/icon.png")));
+      frame.setIconImage(ImageIO.read(new File("res/icon.png")));
     } catch(IOException e) {
-      throw new RuntimeException(e);
+      System.out.println("Couldn't load icon.");
+      System.out.println(Paths.get("").toAbsolutePath());
     }
     frame.setLayout(null);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
