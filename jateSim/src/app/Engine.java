@@ -8,13 +8,22 @@ import components.gates.*;
 import components.sourceComponents.SourceComponentType;
 import components.sourceComponents.SwitchSource;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 
 public class Engine
 {
+
+  public static void main(String[] args)
+  {
+    Engine.runApp();
+  }
 
   public static JFrame frame = new JFrame("jateSim");
   public static MyBar menuBar = new MyBar();
@@ -25,6 +34,11 @@ public class Engine
 
   public Engine(int width, int height)
   {
+    try {
+      frame.setIconImage(ImageIO.read(new File("jateSim/src/res/icon.png")));
+    } catch(IOException e) {
+      throw new RuntimeException(e);
+    }
     frame.setLayout(null);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addComponentListener(new FrameListener());
@@ -39,10 +53,10 @@ public class Engine
     frame.setVisible(true);
   }
 
-  public static void main(String[] args)
+  private static void runApp()
   {
-
     new Engine(800, 800);
+
   }
 
   public static void updateSize()
@@ -62,19 +76,19 @@ public class Engine
     Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case AND:
-        new AndGate(r.width/2, r.height/2, contentPanel);
+        new AndGate(r.width / 2, r.height / 2, contentPanel);
         break;
       case OR:
-        new OrGate(r.width/2, r.height/2, contentPanel);
+        new OrGate(r.width / 2, r.height / 2, contentPanel);
         break;
       case NAND:
-        new NandGate(r.width/2, r.height/2, contentPanel);
+        new NandGate(r.width / 2, r.height / 2, contentPanel);
         break;
       case NOR:
-        new NorGate(r.width/2, r.height/2, contentPanel);
+        new NorGate(r.width / 2, r.height / 2, contentPanel);
         break;
       case NOT:
-        new NotGate(r.width/2, r.height/2, contentPanel);
+        new NotGate(r.width / 2, r.height / 2, contentPanel);
         break;
       default:
         break;
@@ -87,7 +101,7 @@ public class Engine
     Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case BIT:
-        new BitDisplay(r.width/2, r.height/2, contentPanel);
+        new BitDisplay(r.width / 2, r.height / 2, contentPanel);
         break;
       default:
         break;
@@ -100,7 +114,7 @@ public class Engine
     Rectangle r = contentPanel.getVisibleRect();
     switch(type) {
       case SWITCH:
-        new SwitchSource(r.width/2, r.height/2, contentPanel);
+        new SwitchSource(r.width / 2, r.height / 2, contentPanel);
         break;
       default:
         break;

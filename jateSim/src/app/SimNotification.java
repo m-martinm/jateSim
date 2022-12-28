@@ -40,7 +40,6 @@ public class SimNotification implements ActionListener
                             Engine.frame.getLocation().y + Engine.frame.getHeight() - SIZE.height - OFFSET.height);
     this.dialog.setVisible(true);
     this.timer.start();
-    System.out.println(this.textArea.getSize());
   }
 
   public SimNotification(String message, boolean permanent)
