@@ -41,6 +41,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
     setOpaque(false);
     addMouseListener(this);
     Engine.getContentPanel().add(this);
+    revalidate();
     repaint();
   }
 
@@ -74,6 +75,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
       this.rect = new Rectangle(inputPoint.x, inputPoint.y, outputPoint.x - inputPoint.x, outputPoint.y - inputPoint.y);
     }
     setBounds(this.rect);
+    revalidate();
     repaint();
   }
 
@@ -165,6 +167,7 @@ public class Signal extends JPanel implements SimObserver, MouseListener
   public void update()
   {
     this.input.setValue(this.output.getValue());
+    revalidate();
     repaint();
   }
 
