@@ -1,13 +1,10 @@
 package app;
 
 import components.*;
-import components.displayComponents.BitDisplay;
 import components.displayComponents.DisplayComponent;
-import components.displayComponents.DisplayComponentType;
 import components.gates.*;
-import components.sourceComponents.SourceComponentType;
-import components.sourceComponents.SwitchSource;
 import simUtils.SimLogger;
+import simUtils.SimNotification;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,15 +22,23 @@ public class Engine
     Engine.runApp();
   }
 
-  public static JFrame frame = new JFrame("jateSim");
-  public static MyBar menuBar = new MyBar();
-  public static ContentPanel contentPanel = new ContentPanel();
-  public static ControlPanel controlPanel = new ControlPanel();
-  public static Mode mode = Mode.DEFAULT;
-  public static SimClock clock = new SimClock(1);
+  private static final JFrame frame = new JFrame("jateSim");
+  private static final MyBar menuBar = new MyBar();
+  private static final ContentPanel contentPanel = new ContentPanel();
+  private static final ControlPanel controlPanel = new ControlPanel();
+  private static Mode mode = Mode.DEFAULT;
+  private static final SimClock clock = new SimClock(1);
 
-  public Engine(int width, int height)
+  private static void runApp()
   {
+    SimLogger.turnOn(true);
+    try {
+      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    } catch(ClassNotFoundException | InstantiationException | IllegalAccessException |
+            UnsupportedLookAndFeelException e) {
+      SimLogger.log("Couldn't get system's look and feel: " + e);
+    }
+
     try {
       frame.setIconImage(ImageIO.read(new File("res/icon.png")));
     } catch(IOException e) {
@@ -43,7 +48,7 @@ public class Engine
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.addComponentListener(new FrameListener());
     frame.addKeyListener(new FrameListener());
-    frame.setSize(width, height);
+    frame.setSize(800, 800);
 
     frame.add(controlPanel);
     frame.add(contentPanel);
@@ -53,10 +58,24 @@ public class Engine
     frame.setVisible(true);
   }
 
-  private static void runApp()
+  public static JFrame getFrame()
   {
-    SimLogger.turnOn(true);
-    new Engine(800, 800);
+    return frame;
+  }
+
+  public static ContentPanel getContentPanel()
+  {
+    return contentPanel;
+  }
+
+  public static Mode getMode()
+  {
+    return mode;
+  }
+
+  public static SimClock getClock()
+  {
+    return clock;
   }
 
   public static void updateSize()
@@ -70,72 +89,6 @@ public class Engine
     mode = m;
     controlPanel.setModeText(m.name());
   }
-
-  public static void addGate(GateType type)
-  {
-    Rectangle r = contentPanel.getVisibleRect();
-    switch(type) {
-      case AND:
-        new AndGate(r.width / 2, r.height / 2, contentPanel);
-        break;
-      case OR:
-        new OrGate(r.width / 2, r.height / 2, contentPanel);
-        break;
-      case NAND:
-        new NandGate(r.width / 2, r.height / 2, contentPanel);
-        break;
-      case NOR:
-        new NorGate(r.width / 2, r.height / 2, contentPanel);
-        break;
-      case NOT:
-        new NotGate(r.width / 2, r.height / 2, contentPanel);
-        break;
-      default:
-        break;
-    }
-    contentPanel.repaint();
-  }
-
-  public static void addDisplayComponent(DisplayComponentType type)
-  {
-    Rectangle r = contentPanel.getVisibleRect();
-    switch(type) {
-      case BIT:
-        new BitDisplay(r.width / 2, r.height / 2, contentPanel);
-        break;
-      default:
-        break;
-    }
-    contentPanel.repaint();
-  }
-
-  public static void addSourceComponent(SourceComponentType type)
-  {
-    Rectangle r = contentPanel.getVisibleRect();
-    switch(type) {
-      case SWITCH:
-        new SwitchSource(r.width / 2, r.height / 2, contentPanel);
-        break;
-      default:
-        break;
-    }
-    contentPanel.repaint();
-  }
-
-  public static void removeEverything()
-  {
-    SimComponent.deleteAllComponents();
-  }
-
-  /*
-  Update process
-  1. update input pins using signal.update()
-  2. update output pins using gate.update()
-  3. update display components
-  This is one clock tick
-  This way u can only use synchronized systems with one clock
-  In the future create a clock component, so you can give clock signals to different components
-   */
 
   public static void updateCycle()
   {

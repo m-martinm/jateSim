@@ -1,5 +1,8 @@
 package app;
 
+import components.SimComponentFactory;
+import simUtils.SimNotification;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -23,10 +26,10 @@ public class ControlPanel extends JToolBar
     this.modeLabel.setForeground(Color.lightGray);
     this.modeLabel.setToolTipText("(M)OVE, (C)ONNECT, (S)ELECT");
     this.resetPositionButton = new MyButton("Reset position");
-    this.resetPositionButton.addActionListener(e -> Engine.contentPanel.resetPanel());
+    this.resetPositionButton.addActionListener(e -> Engine.getContentPanel().resetPanel());
     this.tickClockButton = new MyButton("Tick clock");
     this.tickClockButton.addActionListener((e) -> {
-      if(!Engine.clock.isRunning()) {
+      if(!Engine.getClock().isRunning()) {
         Engine.updateCycle();
         new SimNotification("Clock ticked!");
       } else {
@@ -34,7 +37,7 @@ public class ControlPanel extends JToolBar
       }
     });
     this.resetComponentsButton = new MyButton("Reset canvas");
-    this.resetComponentsButton.addActionListener(e -> Engine.removeEverything());
+    this.resetComponentsButton.addActionListener(e -> SimComponentFactory.removeAllComponents());
     add(Box.createRigidArea(new Dimension(gap, 0)));
     add(this.modeLabel);
     add(Box.createRigidArea(new Dimension(gap, 0)));

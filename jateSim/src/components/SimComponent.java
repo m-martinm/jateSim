@@ -1,11 +1,8 @@
 package components;
 
 
-import components.displayComponents.DisplayComponent;
-import components.gates.Gate;
-import components.pins.Pin;
+import app.Engine;
 import components.signals.Signal;
-import components.sourceComponents.SourceComponent;
 import simUtils.SimLogger;
 
 import javax.swing.*;
@@ -17,10 +14,8 @@ import java.util.ArrayList;
 
 public class SimComponent implements MouseListener, MouseMotionListener
 {
-  public JLabel label;
-  public JPanel parent;
-  public JPopupMenu popupMenu;
-  public JMenuItem remove = new JMenuItem("Remove component");
+  private JLabel label;
+  private JPanel parent;
   public static ArrayList<SimComponent> allComponents = new ArrayList<>();
 
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
@@ -32,19 +27,19 @@ public class SimComponent implements MouseListener, MouseMotionListener
     this.label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     this.label.addMouseListener(this);
     this.label.addMouseMotionListener(this);
-    this.remove.addActionListener((e) -> {
-      this.deleteComponent();
-      System.out.println("remaining gates: " + Gate.gates.size()); //TODO remove these
-      System.out.println("remaining pins: " + Pin.pins.size());
-      System.out.println("displays: " + DisplayComponent.displayComponents.size());
-      System.out.println("sources: " + SourceComponent.sourceComponents.size());
-      SimLogger.log("Overall components: " + SimComponent.allComponents.size());
-      SimLogger.log("Overall signals: " + Signal.signals.size());
-      System.out.println("------------------------------");
-    });
     this.parent = parentPanel;
     this.parent.add(this.label);
     allComponents.add(this);
+  }
+
+  public JLabel getLabel()
+  {
+    return this.label;
+  }
+
+  public JPanel getParent()
+  {
+    return this.parent;
   }
 
   public Rectangle getRect()
@@ -80,17 +75,20 @@ public class SimComponent implements MouseListener, MouseMotionListener
   // always should call super.deleteComponent()
   public void deleteComponent()
   {
-    parent.remove(this.label);
+    getParent().remove(getLabel());
     allComponents.remove(this);
-    parent.revalidate();
-    parent.repaint();
+    getParent().revalidate();
+    getParent().repaint();
   }
 
   public static void deleteAllComponents()
   {
     for(SimComponent c : allComponents) {
-      c.deleteComponent();
+      c.getParent().remove(c.getLabel());
     }
+    Engine.getContentPanel().revalidate();
+    Engine.getContentPanel().repaint();
+    allComponents.clear();
     Signal.deleteAllSignals();
   }
 
@@ -98,10 +96,14 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public void mouseClicked(MouseEvent e)
   {
     if(e.getButton() == MouseEvent.BUTTON3) {
-      this.popupMenu = new JPopupMenu();
-      this.popupMenu.add(this.remove);
-      this.popupMenu.show(this.parent, this.getX() + this.label.getWidth() / 2,
-                          this.getY() + this.label.getHeight() / 2);
+      JMenuItem remove = new JMenuItem("Remove component");
+      remove.addActionListener((a) -> {
+        deleteComponent();
+        SimLogger.getDisplayedItems();
+      });
+      JPopupMenu popupMenu = new JPopupMenu();
+      popupMenu.add(remove);
+      popupMenu.show(getParent(), getX() + getLabel().getWidth() / 2, getY() + getLabel().getHeight() / 2);
     }
   }
 
@@ -109,7 +111,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public void mouseDragged(MouseEvent e)
   {
     Point m = MouseInfo.getPointerInfo().getLocation();
-    Point c = this.parent.getLocationOnScreen();
+    Point c = getParent().getLocationOnScreen();
     setLocation(m.x - c.x, m.y - c.y);
   }
 

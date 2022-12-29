@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class NotGate extends Gate
 {
-  public static final Dimension notGateSize = new Dimension(50, 30);
+  public static final Dimension NOT_GATE_SIZE = new Dimension(50, 30);
 
   public NotGate(int x, int y, JPanel parentPanel)
   {

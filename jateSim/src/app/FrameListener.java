@@ -39,10 +39,10 @@ public class FrameListener implements ComponentListener, KeyListener
   @Override
   public void keyPressed(KeyEvent e)
   {
-    if(Engine.mode == Mode.MOVE) Engine.contentPanel.movePanel(e);
+    if(Engine.getMode() == Mode.MOVE) Engine.getContentPanel().movePanel(e);
     switch(e.getKeyChar()) {
       case 'M':
-        if(Engine.mode == Mode.MOVE) Engine.setMode(Mode.DEFAULT);
+        if(Engine.getMode() == Mode.MOVE) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.MOVE);
         Pin.deselectAll();
         break;
@@ -51,13 +51,13 @@ public class FrameListener implements ComponentListener, KeyListener
         Pin.deselectAll();
         break;
       case 'C':
-        if(Engine.mode == Mode.CONNECT) {
+        if(Engine.getMode() == Mode.CONNECT) {
           Engine.setMode(Mode.DEFAULT);
           Pin.deselectAll();
         } else Engine.setMode(Mode.CONNECT);
         break;
       case 'S':
-        if(Engine.mode == Mode.SELECT) Engine.setMode(Mode.DEFAULT);
+        if(Engine.getMode() == Mode.SELECT) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.SELECT);
         Pin.deselectAll();
         break;

@@ -1,7 +1,6 @@
 package simNotifier;
 
 import java.util.ArrayList;
-import java.util.Observer;
 
 public class SimObservable
 {
