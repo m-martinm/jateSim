@@ -24,6 +24,7 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenuItem nandGate = new JMenuItem("NAND Gate");
   JMenuItem norGate = new JMenuItem("NOR Gate");
   JMenuItem notGate = new JMenuItem("NOT Gate");
+  JMenuItem addTextComponent = new JMenuItem("Add text label");
 
   JMenu simulate = new JMenu("Simulate");
   JMenuItem start = new JMenuItem("Start simulation");
@@ -69,6 +70,7 @@ public class MyBar extends JMenuBar implements ActionListener
     edit.add(addGate);
     edit.add(addDisplayComponent);
     edit.add(addSourceComponent);
+    edit.add(addTextComponent);
   }
 
   private void initSimulate()
@@ -99,6 +101,7 @@ public class MyBar extends JMenuBar implements ActionListener
     notGate.addActionListener(e -> SimComponentFactory.createNotGate());
     bitDisplay.addActionListener(e -> SimComponentFactory.createBitDisplay());
     switchSource.addActionListener(e -> SimComponentFactory.createSwitchSource());
+    addTextComponent.addActionListener(e -> SimComponentFactory.createTextComponent());
     oneOne.addActionListener(this);
     oneTwo.addActionListener(this);
     oneFour.addActionListener(this);

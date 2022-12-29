@@ -15,6 +15,13 @@ public class SourceComponent extends SimComponent
     sourceComponents.add(this);
   }
 
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    sourceComponents.remove(this);
+  }
+
   public void update()
   {
 

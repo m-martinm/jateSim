@@ -27,4 +27,10 @@ public class DisplayComponent extends SimComponent
     }
   }
 
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    displayComponents.remove(this);
+  }
 }
