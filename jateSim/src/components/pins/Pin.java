@@ -28,7 +28,6 @@ public class Pin extends SimComponent implements MouseListener
   boolean selected;
   public ArrayList<Signal> connectedSignals = new ArrayList<>();
 
-  //TODO add reset Pins to zero
   public Pin(int x, int y, String text, JPanel parentPanel, SimComponent parentSimComponent, PinType type)
   {
     super(x, y, SIZE.width, SIZE.height, text, parentPanel);

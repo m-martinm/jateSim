@@ -1,7 +1,6 @@
 package app;
 
 import components.signals.Signal;
-import components.signals.SignalDrawingMethod;
 
 import javax.swing.*;
 import java.awt.*;
@@ -81,33 +80,14 @@ public class ContentPanel extends JPanel implements MouseListener
     return new Point(a.x - b.x, a.y - b.y);
   }
 
-  private boolean isSignalSelected(Signal s)
-  {
-    Point p = getPoint();
-    if(s.getRect().contains(p)) {
-      return true;
-    }
-    return false;
-  }
-
 
   @Override
   public void mouseClicked(MouseEvent e)
   {
     if(Engine.getMode() == Mode.CONNECT && e.getButton() == MouseEvent.BUTTON3) {
       for(Signal s : Signal.signals) {
-        if(isSignalSelected(s)) {
-          switch(s.getDrawingMethod()) {
-            case LOWER:
-              s.setDrawingMethod(SignalDrawingMethod.UPPER);
-              break;
-            case UPPER:
-              s.setDrawingMethod(SignalDrawingMethod.STRAIGHT);
-              break;
-            case STRAIGHT:
-              s.setDrawingMethod(SignalDrawingMethod.LOWER);
-              break;
-          }
+        if(s.isSelected(getPoint())) {
+          s.changeDrawingMethod();
           update(s.getRect());
           break;
         }

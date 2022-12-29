@@ -2,7 +2,6 @@ package app;
 
 import components.displayComponents.DisplayComponent;
 import components.gates.Gate;
-import simUtils.SimLogger;
 import simUtils.SimNotification;
 
 import javax.imageio.ImageIO;
@@ -51,7 +50,7 @@ public class Engine
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
       } catch(ClassNotFoundException | InstantiationException | IllegalAccessException |
               UnsupportedLookAndFeelException e) {
-        SimLogger.log("Couldn't get system's look and feel: " + e);
+        System.out.println("Couldn't get system's look and feel: " + e);
       }
     }
 

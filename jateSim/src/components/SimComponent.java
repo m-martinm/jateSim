@@ -3,7 +3,6 @@ package components;
 
 import app.Engine;
 import components.signals.Signal;
-import simUtils.SimLogger;
 
 import javax.swing.*;
 import java.awt.*;
@@ -97,10 +96,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   {
     if(e.getButton() == MouseEvent.BUTTON3) {
       JMenuItem remove = new JMenuItem("Remove component");
-      remove.addActionListener((a) -> {
-        deleteComponent();
-        SimLogger.getDisplayedItems();
-      });
+      remove.addActionListener(a -> deleteComponent());
       JPopupMenu popupMenu = new JPopupMenu();
       popupMenu.add(remove);
       popupMenu.show(getParent(), getX() + getLabel().getWidth() / 2, getY() + getLabel().getHeight() / 2);

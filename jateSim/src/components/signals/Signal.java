@@ -13,9 +13,8 @@ import java.util.ArrayList;
 public class Signal implements SimObserver
 {
   public static ArrayList<Signal> signals = new ArrayList<>();
-  private static final int OFFSET = 3;
 
-  private Rectangle rect;
+  private SignalRect rect;
   private Point inputPoint;
   private Point outputPoint;
   private Pin input;
@@ -30,10 +29,9 @@ public class Signal implements SimObserver
     this.output = out;
     inp.connectedSignals.add(this);
     out.connectedSignals.add(this);
-    this.inputPoint = new Point(inp.getX(), inp.getY() +
-            Pin.SIZE.height / 2); //TODO adjust input and output point to the middle of the pin
+    this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.SIZE.height / 2); //TODO adjust input and output
     this.outputPoint = new Point(out.getX() + Pin.SIZE.width, out.getY() + Pin.SIZE.height / 2);
-    this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x, inputPoint.y - outputPoint.y);
+    this.rect = new SignalRect(this);
     reposition();
     signals.add(this);
     getPanel().update();
@@ -49,12 +47,25 @@ public class Signal implements SimObserver
     return drawingMethod;
   }
 
-  public void setDrawingMethod(SignalDrawingMethod dm)
+  public void changeDrawingMethod()
   {
-    this.drawingMethod = dm;
+    switch(drawingMethod) {
+      case LOWER:
+        drawingMethod = SignalDrawingMethod.STRAIGHT;
+        break;
+      case UPPER:
+        drawingMethod = SignalDrawingMethod.LOWER;
+        break;
+      case STRAIGHT:
+        drawingMethod = SignalDrawingMethod.UPPER;
+        break;
+      default:
+        break;
+    }
+    rect.updateRect(this);
   }
 
-  public Rectangle getRect()
+  public SignalRect getRect()
   {
     return rect;
   }
@@ -69,20 +80,10 @@ public class Signal implements SimObserver
     return inputPoint;
   }
 
-  public boolean isSignalSelected(Point p)
+  public boolean isSelected(Point p)
   {
-    // TODO implement to change signal shape
-    switch(drawingMethod) {
-      case STRAIGHT:
-        break;
-      case UPPER:
-        break;
-      case LOWER:
-        break;
-      default:
-        return false;
-    }
-    return true;
+    rect.updateRect(this);
+    return rect.isClicked(p, this);
   }
 
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -102,19 +103,7 @@ public class Signal implements SimObserver
     this.inputPoint.y = this.input.getY() + Pin.SIZE.height / 2;
     this.outputPoint.x = this.output.getX() + Pin.SIZE.width;
     this.outputPoint.y = this.output.getY() + Pin.SIZE.height / 2;
-    if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
-      this.rect = new Rectangle(outputPoint.x - OFFSET, outputPoint.y - OFFSET,
-                                inputPoint.x - outputPoint.x + 2 * OFFSET, inputPoint.y - outputPoint.y + 2 * OFFSET);
-    } else if(outputPoint.x < inputPoint.x && outputPoint.y > inputPoint.y) {
-      this.rect = new Rectangle(outputPoint.x - OFFSET, inputPoint.y - OFFSET,
-                                inputPoint.x - outputPoint.x + 2 * OFFSET, outputPoint.y - inputPoint.y + 2 * OFFSET);
-    } else if(outputPoint.x > inputPoint.x && outputPoint.y < inputPoint.y) {
-      this.rect = new Rectangle(inputPoint.x - OFFSET, outputPoint.y - OFFSET,
-                                outputPoint.x - inputPoint.x + 2 * OFFSET, inputPoint.y - outputPoint.y + 2 * OFFSET);
-    } else if(outputPoint.x > inputPoint.x && outputPoint.y > inputPoint.y) {
-      this.rect = new Rectangle(inputPoint.x - OFFSET, inputPoint.y - OFFSET, outputPoint.x - inputPoint.x + 2 * OFFSET,
-                                outputPoint.y - inputPoint.y + 2 * OFFSET);
-    }
+    rect.updateRect(this);
     getPanel().update(this.rect);
   }
 
