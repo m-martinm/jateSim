@@ -1,5 +1,6 @@
 package app;
 
+import components.SimComponent;
 import components.SimComponentFactory;
 
 import javax.swing.*;
@@ -33,15 +34,21 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenuItem oneTwo = new JMenuItem("1/2");
   JMenuItem oneOne = new JMenuItem("1/1");
 
+  JMenu select = new JMenu("Select");
+  JMenuItem removeSelected = new JMenuItem("Remove selected items");
+  JMenuItem blackBox = new JMenuItem("Selected > blackbox");
+
   public MyBar()
   {
     initFile();
     initEdit();
     initSimulate();
+    initSelect();
     addListeners();
     add(file);
     add(edit);
     add(simulate);
+    add(select);
   }
 
   private void initFile()
@@ -75,6 +82,12 @@ public class MyBar extends JMenuBar implements ActionListener
     simulate.add(setSpeed);
   }
 
+  private void initSelect()
+  {
+    select.add(removeSelected);
+    select.add(blackBox);
+  }
+
   private void addListeners()
   {
     save.addActionListener(this);
@@ -92,6 +105,11 @@ public class MyBar extends JMenuBar implements ActionListener
     oneEight.addActionListener(this);
     start.addActionListener(this);
     stop.addActionListener(this);
+    removeSelected.addActionListener((e) -> {
+      System.out.println(SimComponent.selectedComponents);
+      SimComponentFactory.removeSelectedItems();
+    });
+    blackBox.addActionListener(e -> SimComponentFactory.createBlackBox());
   }
 
   @Override

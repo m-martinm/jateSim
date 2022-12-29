@@ -83,34 +83,38 @@ public class Pin extends SimComponent implements MouseListener
   @Override
   public void mouseClicked(MouseEvent e)
   {
-    if(Engine.getMode() != Mode.CONNECT) return;
-    if(this.type == PinType.INPUT && connectedSignals.size() != 0) {
-      for(Signal s : this.connectedSignals) {
-        s.deleteSignal();
-      }
-      this.connectedSignals.clear();
-    } else if(selectedPin == null) {
-      this.selectPin();
+    if(Engine.getMode() == Mode.SELECT && e.getButton() == MouseEvent.BUTTON1) {
+      selectComponent();
+    } else if(Engine.getMode() == Mode.SELECT && e.getButton() == MouseEvent.BUTTON3) {
+      deselectComponent();
+    } else if(Engine.getMode() == Mode.CONNECT) {
+      if(this.type == PinType.INPUT && connectedSignals.size() != 0) {
+        for(Signal s : this.connectedSignals) {
+          s.deleteSignal();
+        }
+        this.connectedSignals.clear();
+      } else if(selectedPin == null) {
+        this.selectPin();
 
-    } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
+      } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
 
-      if(!Signal.createSignal(selectedPin, this)) {
-        new SimNotification("Pins are already connected!");
-      } else {
+        if(!Signal.createSignal(selectedPin, this)) {
+          new SimNotification("Pins are already connected!");
+        } else {
+          selectedPin.deselectPin();
+        }
+
+      } else if(selectedPin.type == PinType.OUTPUT && this.type == PinType.INPUT) {
+        if(!Signal.createSignal(this, selectedPin)) {
+          new SimNotification("Pins are already connected!");
+        } else selectedPin.deselectPin();
+
+      } else if(this == selectedPin) {
         selectedPin.deselectPin();
+
+      } else {
+        new SimNotification("Invalid connection!");
       }
-
-    } else if(selectedPin.type == PinType.OUTPUT && this.type == PinType.INPUT) {
-      if(!Signal.createSignal(this, selectedPin)) {
-        new SimNotification("Pins are already connected!");
-      } else selectedPin.deselectPin();
-
-    } else if(this == selectedPin) {
-      selectedPin.deselectPin();
-
-    } else {
-      new SimNotification("Invalid connection!");
     }
-
   }
 }

@@ -2,6 +2,7 @@ package components;
 
 import app.ContentPanel;
 import app.Engine;
+import components.boxer.BlackBox;
 import components.displayComponents.BitDisplay;
 import components.gates.*;
 import components.sourceComponents.SwitchSource;
@@ -15,6 +16,21 @@ public class SimComponentFactory
   public static void removeAllComponents()
   {
     SimComponent.deleteAllComponents();
+  }
+
+  public static void removeSelectedItems()
+  {
+    for(SimComponent c : SimComponent.selectedComponents) {
+      c.deleteComponent();
+    }
+  }
+
+  public static void createBlackBox()
+  {
+    Rectangle r = Engine.getContentPanel().getVisibleRect();
+    BlackBox.factory(r.width / 2, r.height / 2, p);
+    p.revalidate();
+    p.repaint();
   }
 
   public static void createAndGate()

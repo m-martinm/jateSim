@@ -1,5 +1,6 @@
 package app;
 
+import components.SimComponent;
 import components.pins.Pin;
 
 import java.awt.event.ComponentEvent;
@@ -48,20 +49,27 @@ public class FrameListener implements ComponentListener, KeyListener
         if(Engine.getMode() == Mode.MOVE) Engine.setMode(Mode.DEFAULT);
         else Engine.setMode(Mode.MOVE);
         Pin.deselectAll();
+        SimComponent.deselectAll();
         break;
       case 'D':
         Engine.setMode(Mode.DEFAULT);
         Pin.deselectAll();
+        SimComponent.deselectAll();
         break;
       case 'C':
         if(Engine.getMode() == Mode.CONNECT) {
           Engine.setMode(Mode.DEFAULT);
           Pin.deselectAll();
-        } else Engine.setMode(Mode.CONNECT);
+        } else {
+          Engine.setMode(Mode.CONNECT);
+          SimComponent.deselectAll();
+        }
         break;
       case 'S':
-        if(Engine.getMode() == Mode.SELECT) Engine.setMode(Mode.DEFAULT);
-        else Engine.setMode(Mode.SELECT);
+        if(Engine.getMode() == Mode.SELECT) {
+          Engine.setMode(Mode.DEFAULT);
+          SimComponent.deselectAll();
+        } else Engine.setMode(Mode.SELECT);
         Pin.deselectAll();
         break;
       default:

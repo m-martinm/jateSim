@@ -59,6 +59,7 @@ public class SignalRect extends Rectangle
 
   public boolean isClicked(Point p, Signal s)
   {
+    if(s.isHidden()) return false;
     switch(s.getDrawingMethod()) {
       case STRAIGHT:
         double d = line1.ptSegDist(p);

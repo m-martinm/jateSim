@@ -2,6 +2,7 @@ package components;
 
 
 import app.Engine;
+import app.Mode;
 import components.signals.Signal;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
   private JLabel label;
   private JPanel parent;
   public static ArrayList<SimComponent> allComponents = new ArrayList<>();
+  public static ArrayList<SimComponent> selectedComponents = new ArrayList<>();
 
   public SimComponent(int x, int y, int w, int h, String text, JPanel parentPanel)
   {
@@ -71,13 +73,33 @@ public class SimComponent implements MouseListener, MouseMotionListener
 
   }
 
-  // always should call super.deleteComponent()
+  public void selectComponent()
+  {
+    if(selectedComponents.contains(this)) return;
+    getLabel().setBorder(BorderFactory.createLineBorder(Color.RED.darker(), 5));
+    selectedComponents.add(this);
+  }
+
+  public void deselectComponent()
+  {
+    if(!selectedComponents.contains(this)) return;
+    getLabel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    selectedComponents.remove(this);
+  }
+
+  public static void deselectAll()
+  {
+    for(SimComponent c : selectedComponents) {
+      c.getLabel().setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    }
+    selectedComponents.clear();
+  }
+
   public void deleteComponent()
   {
     getParent().remove(getLabel());
     allComponents.remove(this);
-    getParent().revalidate();
-    getParent().repaint();
+    Engine.getContentPanel().update();
   }
 
   public static void deleteAllComponents()
@@ -85,8 +107,7 @@ public class SimComponent implements MouseListener, MouseMotionListener
     for(SimComponent c : allComponents) {
       c.getParent().remove(c.getLabel());
     }
-    Engine.getContentPanel().revalidate();
-    Engine.getContentPanel().repaint();
+    Engine.getContentPanel().update();
     allComponents.clear();
     Signal.deleteAllSignals();
   }
@@ -94,12 +115,16 @@ public class SimComponent implements MouseListener, MouseMotionListener
   @Override
   public void mouseClicked(MouseEvent e)
   {
-    if(e.getButton() == MouseEvent.BUTTON3) {
+    if(Engine.getMode() == Mode.DEFAULT && e.getButton() == MouseEvent.BUTTON3) {
       JMenuItem remove = new JMenuItem("Remove component");
       remove.addActionListener(a -> deleteComponent());
       JPopupMenu popupMenu = new JPopupMenu();
       popupMenu.add(remove);
       popupMenu.show(getParent(), getX() + getLabel().getWidth() / 2, getY() + getLabel().getHeight() / 2);
+    } else if(Engine.getMode() == Mode.SELECT && e.getButton() == MouseEvent.BUTTON1) {
+      selectComponent();
+    } else if(Engine.getMode() == Mode.SELECT && e.getButton() == MouseEvent.BUTTON3) {
+      deselectComponent();
     }
   }
 

@@ -31,9 +31,19 @@ public class Gate extends SimComponent
     gates.add(this);
   }
 
-  public int getOutput()
+  public Pin getInput1()
   {
-    return this.output.getValue();
+    return input1;
+  }
+
+  public Pin getInput2()
+  {
+    return input2;
+  }
+
+  public Pin getOutput()
+  {
+    return output;
   }
 
   @Override

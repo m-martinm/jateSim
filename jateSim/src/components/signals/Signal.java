@@ -20,6 +20,7 @@ public class Signal implements SimObserver
   private Pin input;
   private Pin output;
   private SignalDrawingMethod drawingMethod;
+  private boolean hidden = false;
 
   private Signal(Pin inp, Pin out)
   {
@@ -35,6 +36,11 @@ public class Signal implements SimObserver
     reposition();
     signals.add(this);
     getPanel().update();
+  }
+
+  public void hide()
+  {
+    hidden = true;
   }
 
   public static ContentPanel getPanel()
@@ -86,6 +92,11 @@ public class Signal implements SimObserver
     return rect.isClicked(p, this);
   }
 
+  public boolean isHidden()
+  {
+    return hidden;
+  }
+
   @SuppressWarnings("BooleanMethodIsAlwaysInverted")
   public static boolean createSignal(Pin inp, Pin out)
   {
@@ -116,7 +127,7 @@ public class Signal implements SimObserver
 
   public void paintSignal(Graphics2D g)
   {
-
+    if(hidden) return;
     g.setStroke(new BasicStroke(2));
     if(this.output.getValue() == Pin.HIGH) {
       g.setColor(Color.green.darker());

@@ -62,7 +62,7 @@ public class SwitchSource extends SourceComponent
   public void mouseClicked(MouseEvent e)
   {
     super.mouseClicked(e);
-    if(e.getButton() == MouseEvent.BUTTON1) this.update();
+    if(Engine.getMode() == Mode.DEFAULT && e.getButton() == MouseEvent.BUTTON1) this.update();
   }
 
   @Override
