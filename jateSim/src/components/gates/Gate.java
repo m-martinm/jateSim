@@ -1,14 +1,13 @@
 package components.gates;
 
-import javax.swing.*;
-
 import app.Engine;
 import app.Mode;
-import components.*;
+import components.SimComponent;
 import components.pins.Pin;
 import components.pins.PinType;
 import components.signals.Signal;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 

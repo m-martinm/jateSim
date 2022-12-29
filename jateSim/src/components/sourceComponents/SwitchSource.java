@@ -47,7 +47,7 @@ public class SwitchSource extends SourceComponent
       case Pin.LOW:
         this.output.setValue(Pin.HIGH);
         getLabel().setText("S(1)");
-        getLabel().setBackground(Color.green);
+        getLabel().setBackground(Color.green.darker());
         break;
       case Pin.UNKNOWN:
         this.output.setValue(Pin.LOW);
