@@ -43,7 +43,6 @@ public class FrameListener implements ComponentListener, KeyListener
   @Override
   public void keyPressed(KeyEvent e)
   {
-    if(Engine.getMode() == Mode.MOVE) Engine.getContentPanel().movePanel(e);
     switch(e.getKeyChar()) {
       case 'M':
         if(Engine.getMode() == Mode.MOVE) Engine.setMode(Mode.DEFAULT);

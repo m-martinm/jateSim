@@ -33,8 +33,73 @@ public class BlackBox extends SimComponent
     this.outputs = outputs;
     this.gates = gates;
     this.signals = signals;
+    if(inputs.size() > 6 || outputs.size() > 6) {
+      getLabel().setBounds(getX(), getY(), SIZE.width, 2 * SIZE.height);
+    }
     init();
     blackBoxes.add(this);
+    Signal.repositionSignals();
+  }
+
+  public void changeName()
+  {
+    String n = JOptionPane.showInputDialog("Please enter a new name");
+    getLabel().setText(n);
+  }
+
+  public void takeApart()
+  {
+    // Remove the black box from the list of black boxes and the parent panel
+    blackBoxes.remove(this);
+    getParent().remove(getLabel());
+
+    // Add all the input and output pins to the parent panel
+    for(Pin pin : inputs) {
+      pin.getParent().add(pin.getLabel());
+    }
+    for(Pin pin : outputs) {
+      pin.getParent().add(pin.getLabel());
+    }
+
+    // Add all the gates and signals to the parent panel
+    for(Gate gate : gates) {
+      gate.getParent().add(gate.getLabel());
+      if(!gate.getParent().isAncestorOf(gate.getInput1().getLabel())) {
+        gate.getParent().add(gate.getInput1().getLabel());
+      }
+      if(!gate.getParent().isAncestorOf(gate.getInput2().getLabel())) {
+        gate.getParent().add(gate.getInput2().getLabel());
+      }
+      if(!gate.getParent().isAncestorOf(gate.getOutput().getLabel())) {
+        gate.getParent().add(gate.getOutput().getLabel());
+      }
+      gate.updatePinLocations();
+    }
+    for(Signal signal : signals) {
+      signal.unhide();
+    }
+    Engine.getContentPanel().update();
+    Signal.repositionSignals();
+  }
+
+  public void cloneBox()
+  {
+    for(int i = 0; i < inputs.size(); i++) {
+
+    }
+    BlackBox clone = new BlackBox(getX(), getY(), inputs, outputs, gates, signals, getParent()); //TODO make a copy of these arrays
+    clone.getLabel().setText(getLabel().getText());
+    blackBoxes.add(clone);
+    Engine.getContentPanel().update();
+    Signal.repositionSignals();
+  }
+
+
+  @Override
+  public void deleteComponent()
+  {
+    super.deleteComponent();
+    blackBoxes.remove(this);
   }
 
   @Override
@@ -64,11 +129,17 @@ public class BlackBox extends SimComponent
     if(Engine.getMode() == Mode.DEFAULT && e.getButton() == MouseEvent.BUTTON3) {
       JMenuItem remove = new JMenuItem("Remove component");
       remove.addActionListener(a -> deleteComponent());
-      JMenuItem takeApart = new JMenuItem("Take apart the BlackBox");
-      takeApart.addActionListener(a -> System.out.println("Not yet implemented")); //TODO implement
+      JMenuItem name = new JMenuItem("Change name");
+      name.addActionListener(a -> changeName());
+      JMenuItem setBack = new JMenuItem("Take it apart");
+      setBack.addActionListener(a -> takeApart());
+      JMenuItem getClone = new JMenuItem("Make a copy of it");
+      getClone.addActionListener(a -> cloneBox());
       JPopupMenu popupMenu = new JPopupMenu();
       popupMenu.add(remove);
-      popupMenu.add(takeApart);
+      popupMenu.add(name);
+      popupMenu.add(setBack);
+      popupMenu.add(getClone);
       popupMenu.show(getParent(), getX() + getLabel().getWidth() / 2, getY() + getLabel().getHeight() / 2);
     } else if(Engine.getMode() == Mode.SELECT && e.getButton() == MouseEvent.BUTTON1) {
       selectComponent();

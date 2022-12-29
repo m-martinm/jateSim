@@ -33,7 +33,7 @@ public class Pin extends SimComponent implements MouseListener
     super(x, y, SIZE.width, SIZE.height, text, parentPanel);
     this.parentSimComponent = parentSimComponent;
     this.type = type;
-    this.value = new SimObservable(UNKNOWN);
+    this.value = new SimObservable(LOW);
     this.selected = false;
     pins.add(this);
   }
@@ -95,7 +95,8 @@ public class Pin extends SimComponent implements MouseListener
         this.connectedSignals.clear();
       } else if(selectedPin == null) {
         this.selectPin();
-
+      } else if(selectedPin.parentSimComponent == this.parentSimComponent) {
+        new SimNotification("Invalid connection!");
       } else if(selectedPin.type == PinType.INPUT && this.type == PinType.OUTPUT) {
 
         if(!Signal.createSignal(selectedPin, this)) {

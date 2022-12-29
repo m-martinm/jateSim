@@ -25,6 +25,14 @@ public class SimComponentFactory
     }
   }
 
+  public static void createTextComponent()
+  {
+    Rectangle r = Engine.getContentPanel().getVisibleRect();
+    TextComponent.getInstance(r.width / 2, r.height / 2, p);
+    p.revalidate();
+    p.repaint();
+  }
+
   public static void createBlackBox()
   {
     Rectangle r = Engine.getContentPanel().getVisibleRect();

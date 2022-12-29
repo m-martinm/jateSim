@@ -46,6 +46,13 @@ public class Gate extends SimComponent
     return output;
   }
 
+  public void updatePinLocations()
+  {
+    getInput1().getLabel().setLocation(getX() - Pin.SIZE.width, getY());
+    getInput2().getLabel().setLocation(getX() - Pin.SIZE.width, getY() + SIZE.height - Pin.SIZE.height);
+    getOutput().getLabel().setLocation(getX() + SIZE.width, getY() + SIZE.height / 2 - Pin.SIZE.height / 2);
+  }
+
   @Override
   public void setLocation(int x, int y)
   {

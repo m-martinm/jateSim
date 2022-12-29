@@ -139,12 +139,14 @@ public class SimComponent implements MouseListener, MouseMotionListener
   @Override
   public void mousePressed(MouseEvent e)
   {
+    if(Engine.getMode() != Mode.MOVE) return;
+    getParent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
   }
 
   @Override
   public void mouseReleased(MouseEvent e)
   {
-
+    getParent().setCursor(Cursor.getDefaultCursor());
   }
 
   @Override

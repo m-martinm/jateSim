@@ -7,10 +7,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class ContentPanel extends JPanel implements MouseListener
+public class ContentPanel extends JPanel implements MouseListener, MouseMotionListener
 {
   public static final Dimension SIZE = new Dimension(5000, 5000);
+
+  private Point startPoint;
 
   ContentPanel()
   {
@@ -19,37 +22,13 @@ public class ContentPanel extends JPanel implements MouseListener
     setBounds(0, ControlPanel.height, SIZE.width, SIZE.height);
     setLayout(null);
     addMouseListener(this);
+    addMouseMotionListener(this);
   }
 
   public void resetPanel()
   {
     setLocation(0, ControlPanel.height);
     Signal.getPanel().setLocation(0, ControlPanel.height);
-  }
-
-  public void movePanel(KeyEvent e)
-  {
-    switch(e.getKeyCode()) {
-      case KeyEvent.VK_LEFT:
-        setLocation(getX() + 10, getY());
-        Signal.getPanel().setLocation(getX() + 10, getY());
-        break;
-      case KeyEvent.VK_RIGHT:
-        setLocation(getX() - 10, getY());
-        Signal.getPanel().setLocation(getX() - 10, getY());
-        break;
-      case KeyEvent.VK_DOWN:
-        setLocation(getX(), getY() - 10);
-        Signal.getPanel().setLocation(getX(), getY() - 10);
-        break;
-      case KeyEvent.VK_UP:
-        setLocation(getX(), getY() + 10);
-        Signal.getPanel().setLocation(getX(), getY() + 10);
-        break;
-      default:
-        break;
-    }
-
   }
 
   public void update()
@@ -98,13 +77,16 @@ public class ContentPanel extends JPanel implements MouseListener
   @Override
   public void mousePressed(MouseEvent e)
   {
-
+    if(Engine.getMode() == Mode.MOVE) {
+      startPoint = e.getPoint();
+      setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+    }
   }
 
   @Override
   public void mouseReleased(MouseEvent e)
   {
-
+    if(Engine.getMode() == Mode.MOVE) setCursor(Cursor.getDefaultCursor());
   }
 
   @Override
@@ -115,6 +97,21 @@ public class ContentPanel extends JPanel implements MouseListener
 
   @Override
   public void mouseExited(MouseEvent e)
+  {
+
+  }
+
+  @Override
+  public void mouseDragged(MouseEvent e)
+  {
+    if(Engine.getMode() == Mode.MOVE) {
+      Point p = getLocation();
+      setLocation(p.x + e.getX() - startPoint.x, p.y + e.getY() - startPoint.y);
+    }
+  }
+
+  @Override
+  public void mouseMoved(MouseEvent e)
   {
 
   }

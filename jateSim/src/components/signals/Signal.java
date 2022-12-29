@@ -92,6 +92,11 @@ public class Signal implements SimObserver
     return rect.isClicked(p, this);
   }
 
+  public void unhide()
+  {
+    hidden = false;
+  }
+
   public boolean isHidden()
   {
     return hidden;

@@ -17,9 +17,10 @@ public class SwitchSource extends SourceComponent
 
   public SwitchSource(int x, int y, JPanel parentPanel)
   {
-    super(x, y, SIZE.width, SIZE.height, "S(X)", parentPanel);
+    super(x, y, SIZE.width, SIZE.height, "S(0)", parentPanel);
     this.output = new Pin(x + SIZE.width, (y + SIZE.height / 2) - Pin.SIZE.height / 2, "O", parentPanel, this,
                           PinType.OUTPUT);
+    getLabel().setBackground(Color.red.darker());
   }
 
   @Override
@@ -40,9 +41,9 @@ public class SwitchSource extends SourceComponent
   {
     switch(this.output.getValue()) {
       case Pin.HIGH:
-        this.output.setValue(Pin.UNKNOWN);
-        getLabel().setText("S(X)");
-        getLabel().setBackground(Color.gray);
+        this.output.setValue(Pin.LOW);
+        getLabel().setText("S(0)");
+        getLabel().setBackground(Color.red.darker());
         break;
       case Pin.LOW:
         this.output.setValue(Pin.HIGH);
