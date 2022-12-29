@@ -19,7 +19,23 @@ public class Engine
 
   public static void main(String[] args)
   {
-    Engine.runApp();
+
+    if(args.length == 0) {
+      System.out.println("There is no given command, the app runs with default configuration.");
+      runApp(false);
+    } else if(args.length > 1) {
+      System.out.println("Too many commands were given, run 'java -jar jateSim.jar --help for more information.'");
+    } else if(args[0].equals("--help")) {
+      System.out.println("--getLAF  With the flag the app will load the system's default Look and Feel.");
+      System.out.println("          Without this flag there might be some bugs,");
+      System.out.println("          if something isn't working try running the app without it.\n");
+      System.out.println("--help    Displays this window.");
+    } else if(args[0].equals("--getLAF")) {
+      runApp(true);
+    } else {
+      System.out.println("The command " + args[0] +
+                                 " doesn't exist (yet), run 'java -jar jateSim.jar --help' for more information.");
+    }
   }
 
   private static final JFrame frame = new JFrame("jateSim");
@@ -29,20 +45,23 @@ public class Engine
   private static Mode mode = Mode.DEFAULT;
   private static final SimClock clock = new SimClock(1);
 
-  private static void runApp()
+  private static void runApp(boolean getLAF)
   {
-    SimLogger.turnOn(true);
-    try {
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-    } catch(ClassNotFoundException | InstantiationException | IllegalAccessException |
-            UnsupportedLookAndFeelException e) {
-      SimLogger.log("Couldn't get system's look and feel: " + e);
+    //    SimLogger.turnOn(true);
+    if(getLAF) {
+      try {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+      } catch(ClassNotFoundException | InstantiationException | IllegalAccessException |
+              UnsupportedLookAndFeelException e) {
+        SimLogger.log("Couldn't get system's look and feel: " + e);
+      }
     }
 
     try {
       frame.setIconImage(ImageIO.read(new File("res/icon.png")));
     } catch(IOException e) {
-      System.out.println("Couldn't load icon.");
+      System.out.println(
+              "Couldn't load icon. Make sure to place the 'res' folder in the same folder with the .jar file.");
     }
     frame.setLayout(null);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
