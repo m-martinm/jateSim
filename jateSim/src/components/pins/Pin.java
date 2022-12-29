@@ -2,10 +2,10 @@ package components.pins;
 
 import app.Engine;
 import app.Mode;
-import simUtils.SimNotification;
 import components.SimComponent;
 import components.signals.Signal;
 import simNotifier.SimObservable;
+import simUtils.SimNotification;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +28,7 @@ public class Pin extends SimComponent implements MouseListener
   boolean selected;
   public ArrayList<Signal> connectedSignals = new ArrayList<>();
 
+  //TODO add reset Pins to zero
   public Pin(int x, int y, String text, JPanel parentPanel, SimComponent parentSimComponent, PinType type)
   {
     super(x, y, SIZE.width, SIZE.height, text, parentPanel);

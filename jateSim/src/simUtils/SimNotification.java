@@ -38,8 +38,9 @@ public class SimNotification implements ActionListener
     this.dialog.add(textArea);
     this.timer = new Timer(2000, this);
     this.timer.setRepeats(false);
-    this.dialog.setLocation(Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
-                            Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
+    this.dialog.setLocation(
+            Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
+            Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
     this.dialog.setVisible(true);
     this.timer.start();
   }
@@ -65,8 +66,9 @@ public class SimNotification implements ActionListener
       this.dialog.setSize(SIZE);
       this.dialog.setLayout(new GridBagLayout());
       this.dialog.add(textArea);
-      this.dialog.setLocation(Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
-                              Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
+      this.dialog.setLocation(
+              Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
+              Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
       this.dialog.setVisible(true);
     }
   }

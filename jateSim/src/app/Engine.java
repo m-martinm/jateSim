@@ -1,14 +1,12 @@
 package app;
 
-import components.*;
 import components.displayComponents.DisplayComponent;
-import components.gates.*;
+import components.gates.Gate;
 import simUtils.SimLogger;
 import simUtils.SimNotification;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

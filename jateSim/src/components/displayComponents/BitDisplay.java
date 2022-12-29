@@ -6,7 +6,6 @@ import components.pins.Pin;
 import components.pins.PinType;
 import components.signals.Signal;
 
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,7 +31,7 @@ public class BitDisplay extends DisplayComponent
     int b = y - getLabel().getHeight() / 2;
     getLabel().setBounds(a, b, getLabel().getWidth(), getLabel().getHeight());
     this.input.getLabel().setBounds(a - Pin.SIZE.width, (b + SIZE.height / 2) - Pin.SIZE.height / 2, Pin.SIZE.width,
-                               Pin.SIZE.height);
+                                    Pin.SIZE.height);
     Signal.repositionSignals();
   }
 
