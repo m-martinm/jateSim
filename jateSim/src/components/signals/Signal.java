@@ -17,11 +17,11 @@ public class Signal extends JPanel implements SimObserver, MouseListener
 {
   public static ArrayList<Signal> signals = new ArrayList<>();
 
-  public Rectangle rect;
-  public Point inputPoint;
-  public Point outputPoint;
-  public Pin input;
-  public Pin output;
+  private Rectangle rect;
+  private Point inputPoint;
+  private Point outputPoint;
+  private Pin input;
+  private Pin output;
   private SignalDrawingMethod drawingMethod;
 
   private Signal(Pin inp, Pin out)
@@ -32,15 +32,15 @@ public class Signal extends JPanel implements SimObserver, MouseListener
     this.output = out;
     inp.connectedSignals.add(this);
     out.connectedSignals.add(this);
-    this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.size.height / 2);
-    this.outputPoint = new Point(out.getX() + Pin.size.width, out.getY() + Pin.size.height / 2);
+    this.inputPoint = new Point(inp.getX(), inp.getY() + Pin.SIZE.height / 2);
+    this.outputPoint = new Point(out.getX() + Pin.SIZE.width, out.getY() + Pin.SIZE.height / 2);
     this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x, inputPoint.y - outputPoint.y);
     reposition();
     signals.add(this);
     setBounds(this.rect);
     setOpaque(false);
     addMouseListener(this);
-    Engine.contentPanel.add(this);
+    Engine.getContentPanel().add(this);
     repaint();
   }
 
@@ -58,9 +58,9 @@ public class Signal extends JPanel implements SimObserver, MouseListener
   public void reposition()
   {
     this.inputPoint.x = this.input.getX();
-    this.inputPoint.y = this.input.getY() + Pin.size.height / 2;
-    this.outputPoint.x = this.output.getX() + Pin.size.width;
-    this.outputPoint.y = this.output.getY() + Pin.size.height / 2;
+    this.inputPoint.y = this.input.getY() + Pin.SIZE.height / 2;
+    this.outputPoint.x = this.output.getX() + Pin.SIZE.width;
+    this.outputPoint.y = this.output.getY() + Pin.SIZE.height / 2;
     if(outputPoint.x < inputPoint.x && outputPoint.y < inputPoint.y) {
       this.rect = new Rectangle(outputPoint.x, outputPoint.y, inputPoint.x - outputPoint.x,
                                 inputPoint.y - outputPoint.y);
@@ -170,32 +170,20 @@ public class Signal extends JPanel implements SimObserver, MouseListener
 
   public void deleteSignal()
   {
-    Engine.contentPanel.remove(this);
+    Engine.getContentPanel().remove(this);
     signals.remove(this);
-    Engine.contentPanel.revalidate();
-    Engine.contentPanel.repaint();
+    Engine.getContentPanel().revalidate();
+    Engine.getContentPanel().repaint();
   }
 
   public static void deleteAllSignals()
   {
     for(Signal s : signals) {
-      s.deleteSignal();
+      Engine.getContentPanel().remove(s);
     }
-  }
-
-  @Deprecated
-  public static void updateSignals()
-  {
-    for(Signal s : signals) {
-      s.update();
-    }
-  }
-
-  @Deprecated
-  public static void repaintSignals()
-  {
-    for(Signal s : signals)
-      s.repaint();
+    signals.clear();
+    Engine.getContentPanel().revalidate();
+    Engine.getContentPanel().repaint();
   }
 
   @Override
@@ -207,15 +195,19 @@ public class Signal extends JPanel implements SimObserver, MouseListener
   @Override
   public void mouseClicked(MouseEvent e)
   {
-    if(Engine.mode == Mode.CONNECT && e.getButton() == MouseEvent.BUTTON3) {
+    if(Engine.getMode() == Mode.CONNECT && e.getButton() == MouseEvent.BUTTON3) {
       switch(this.drawingMethod) {
-        case LOWER: this.drawingMethod = SignalDrawingMethod.UPPER;
-        break;
-        case UPPER: this.drawingMethod = SignalDrawingMethod.STRAIGHT;
-        break;
-        case STRAIGHT: this.drawingMethod = SignalDrawingMethod.LOWER;
-        break;
+        case LOWER:
+          this.drawingMethod = SignalDrawingMethod.UPPER;
+          break;
+        case UPPER:
+          this.drawingMethod = SignalDrawingMethod.STRAIGHT;
+          break;
+        case STRAIGHT:
+          this.drawingMethod = SignalDrawingMethod.LOWER;
+          break;
       }
+      revalidate();
       repaint();
     }
   }

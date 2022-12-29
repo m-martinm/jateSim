@@ -6,35 +6,35 @@ import java.awt.event.KeyEvent;
 
 public class ContentPanel extends JPanel
 {
-  public static Dimension size = new Dimension(5000, 5000);
+  public static final Dimension SIZE = new Dimension(5000, 5000);
 
   ContentPanel()
   {
     setBackground(Color.lightGray);
-    setPreferredSize(size);
-    setBounds(0, ControlPanel.height, size.width, size.height);
+    setPreferredSize(SIZE);
+    setBounds(0, ControlPanel.height, SIZE.width, SIZE.height);
     setLayout(null);
   }
 
   public void resetPanel()
   {
-    this.setLocation(0, ControlPanel.height);
+    setLocation(0, ControlPanel.height);
   }
 
   public void movePanel(KeyEvent e)
   {
     switch(e.getKeyCode()) {
       case KeyEvent.VK_LEFT:
-        this.setLocation(this.getX() + 10, this.getY());
+        this.setLocation(getX() + 10, getY());
         break;
       case KeyEvent.VK_RIGHT:
-        this.setLocation(this.getX() - 10, this.getY());
+        this.setLocation(getX() - 10, getY());
         break;
       case KeyEvent.VK_DOWN:
-        this.setLocation(this.getX(), this.getY() - 10);
+        this.setLocation(getX(), getY() - 10);
         break;
       case KeyEvent.VK_UP:
-        this.setLocation(this.getX(), this.getY() + 10);
+        this.setLocation(getX(), getY() + 10);
         break;
       default:
         break;

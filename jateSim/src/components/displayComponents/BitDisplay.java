@@ -12,13 +12,13 @@ import java.awt.*;
 
 public class BitDisplay extends DisplayComponent
 {
-  public static final Dimension size = new Dimension(30, 30);
+  public static final Dimension SIZE = new Dimension(30, 30);
   Pin input;
 
   public BitDisplay(int x, int y, JPanel parentPanel)
   {
-    super(x, y, size.width, size.height, "X", parentPanel);
-    this.input = new Pin(x - Pin.size.width, (y + size.height / 2) - Pin.size.height / 2, "1", parentPanel, this,
+    super(x, y, SIZE.width, SIZE.height, "X", parentPanel);
+    this.input = new Pin(x - Pin.SIZE.width, (y + SIZE.height / 2) - Pin.SIZE.height / 2, "1", parentPanel, this,
                          PinType.INPUT);
 
   }
@@ -26,13 +26,13 @@ public class BitDisplay extends DisplayComponent
   @Override
   public void setLocation(int x, int y)
   {
-    if(Engine.mode != Mode.MOVE) return;
-    if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
-    int a = x - this.label.getWidth() / 2;
-    int b = y - this.label.getHeight() / 2;
-    this.label.setBounds(a, b, this.label.getWidth(), this.label.getHeight());
-    this.input.label.setBounds(a - Pin.size.width, (b + size.height / 2) - Pin.size.height / 2, Pin.size.width,
-                               Pin.size.height);
+    if(Engine.getMode() != Mode.MOVE) return;
+    if(x > getParent().getWidth() || x < 0 || y > getParent().getHeight() || y < 0) return;
+    int a = x - getLabel().getWidth() / 2;
+    int b = y - getLabel().getHeight() / 2;
+    getLabel().setBounds(a, b, getLabel().getWidth(), getLabel().getHeight());
+    this.input.getLabel().setBounds(a - Pin.SIZE.width, (b + SIZE.height / 2) - Pin.SIZE.height / 2, Pin.SIZE.width,
+                               Pin.SIZE.height);
     Signal.repositionSignals();
   }
 
@@ -41,13 +41,13 @@ public class BitDisplay extends DisplayComponent
   {
     switch(this.input.getValue()) {
       case 1:
-        this.label.setText("1");
+        getLabel().setText("1");
         break;
       case 0:
-        this.label.setText("0");
+        getLabel().setText("0");
         break;
       default:
-        this.label.setText("X");
+        getLabel().setText("X");
         break;
     }
   }

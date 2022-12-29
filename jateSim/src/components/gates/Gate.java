@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class Gate extends SimComponent
 {
-  public static final Dimension size = new Dimension(50, 70);
+  public static final Dimension SIZE = new Dimension(50, 70);
   public static ArrayList<Gate> gates = new ArrayList<>();
 
   Pin input1;
@@ -23,11 +23,12 @@ public class Gate extends SimComponent
 
   public Gate(int x, int y, String text, JPanel parentPanel)
   {
-    super(x, y, size.width, size.height, text, parentPanel);
-    this.input1 = new Pin(x - Pin.size.width, y, "1", this.parent, this, PinType.INPUT);
-    this.input2 = new Pin(x - Pin.size.width, y + size.height - Pin.size.height, "2", this.parent, this, PinType.INPUT);
-    this.output = new Pin(x + size.width, y + size.height / 2 - Pin.size.height / 2, "O", this.parent, this,
+    super(x, y, SIZE.width, SIZE.height, text, parentPanel);
+    this.input1 = new Pin(x - Pin.SIZE.width, y, "1", getParent(), this, PinType.INPUT);
+    this.input2 = new Pin(x - Pin.SIZE.width, y + SIZE.height - Pin.SIZE.height, "2", getParent(), this, PinType.INPUT);
+    this.output = new Pin(x + SIZE.width, y + SIZE.height / 2 - Pin.SIZE.height / 2, "O", getParent(), this,
                           PinType.OUTPUT);
+    this.output.setValue(Pin.LOW);
     gates.add(this);
   }
 
@@ -39,15 +40,16 @@ public class Gate extends SimComponent
   @Override
   public void setLocation(int x, int y)
   {
-    if(Engine.mode != Mode.MOVE) return;
-    if(x > this.parent.getWidth() || x < 0 || y > this.parent.getHeight() || y < 0) return;
-    int a = x - this.label.getWidth() / 2;
-    int b = y - this.label.getHeight() / 2;
-    this.label.setBounds(a, b, this.label.getWidth(), this.label.getHeight());
-    this.input1.label.setBounds(a - Pin.size.width, b, Pin.size.width, Pin.size.height);
-    this.input2.label.setBounds(a - Pin.size.width, b + size.height - Pin.size.height, Pin.size.width, Pin.size.height);
-    this.output.label.setBounds(a + size.width, b + size.height / 2 - Pin.size.height / 2, Pin.size.width,
-                                Pin.size.height);
+    if(Engine.getMode() != Mode.MOVE) return;
+    if(x > getParent().getWidth() || x < 0 || y > getParent().getHeight() || y < 0) return;
+    int a = x - getLabel().getWidth() / 2;
+    int b = y - getLabel().getHeight() / 2;
+    getLabel().setBounds(a, b, getLabel().getWidth(), getLabel().getHeight());
+    this.input1.getLabel().setBounds(a - Pin.SIZE.width, b, Pin.SIZE.width, Pin.SIZE.height);
+    this.input2.getLabel().setBounds(a - Pin.SIZE.width, b + SIZE.height - Pin.SIZE.height, Pin.SIZE.width,
+                                     Pin.SIZE.height);
+    this.output.getLabel().setBounds(a + SIZE.width, b + SIZE.height / 2 - Pin.SIZE.height / 2, Pin.SIZE.width,
+                                     Pin.SIZE.height);
     Signal.repositionSignals();
   }
 

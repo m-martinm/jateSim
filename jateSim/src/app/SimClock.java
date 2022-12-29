@@ -7,13 +7,11 @@ import java.awt.event.ActionListener;
 public class SimClock implements ActionListener
 {
   private final Timer timer;
-  private int updateSpeed;
   private boolean running;
 
   public SimClock(int updatesPerSecond)
   {
-    this.updateSpeed = 1000 / updatesPerSecond;
-    this.timer = new Timer(updateSpeed, this);
+    this.timer = new Timer(1000 / updatesPerSecond, this);
     this.timer.setRepeats(true);
     this.running = false;
   }

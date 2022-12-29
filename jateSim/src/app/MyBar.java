@@ -1,8 +1,6 @@
 package app;
 
-import components.displayComponents.DisplayComponentType;
-import components.gates.GateType;
-import components.sourceComponents.SourceComponentType;
+import components.SimComponentFactory;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -20,11 +18,11 @@ public class MyBar extends JMenuBar implements ActionListener
   JMenu addDisplayComponent = new JMenu("Add display component");
   JMenuItem bitDisplay = new JMenuItem("Bit display");
   JMenu addGate = new JMenu("Add gate");
-  JMenuItem AND = new JMenuItem("AND Gate");
-  JMenuItem OR = new JMenuItem("OR Gate");
-  JMenuItem NAND = new JMenuItem("NAND Gate");
-  JMenuItem NOR = new JMenuItem("NOR Gate");
-  JMenuItem NOT = new JMenuItem("NOT Gate");
+  JMenuItem andGate = new JMenuItem("AND Gate");
+  JMenuItem orGate = new JMenuItem("OR Gate");
+  JMenuItem nandGate = new JMenuItem("NAND Gate");
+  JMenuItem norGate = new JMenuItem("NOR Gate");
+  JMenuItem notGate = new JMenuItem("NOT Gate");
 
   JMenu simulate = new JMenu("Simulate");
   JMenuItem start = new JMenuItem("Start simulation");
@@ -48,46 +46,46 @@ public class MyBar extends JMenuBar implements ActionListener
 
   private void initFile()
   {
-    this.file.add(save);
-    this.file.add(load);
+    file.add(save);
+    file.add(load);
   }
 
   private void initEdit()
   {
-    this.addSourceComponent.add(switchSource);
-    this.addDisplayComponent.add(bitDisplay);
-    this.addGate.add(AND);
-    this.addGate.add(OR);
-    this.addGate.add(NAND);
-    this.addGate.add(NOR);
-    this.addGate.add(NOT);
-    this.edit.add(addGate);
-    this.edit.add(addDisplayComponent);
-    this.edit.add(addSourceComponent);
+    addSourceComponent.add(switchSource);
+    addDisplayComponent.add(bitDisplay);
+    addGate.add(andGate);
+    addGate.add(orGate);
+    addGate.add(nandGate);
+    addGate.add(norGate);
+    addGate.add(notGate);
+    edit.add(addGate);
+    edit.add(addDisplayComponent);
+    edit.add(addSourceComponent);
   }
 
   private void initSimulate()
   {
-    this.setSpeed.add(oneOne);
-    this.setSpeed.add(oneTwo);
-    this.setSpeed.add(oneFour);
-    this.setSpeed.add(oneEight);
-    this.simulate.add(start);
-    this.simulate.add(stop);
-    this.simulate.add(setSpeed);
+    setSpeed.add(oneOne);
+    setSpeed.add(oneTwo);
+    setSpeed.add(oneFour);
+    setSpeed.add(oneEight);
+    simulate.add(start);
+    simulate.add(stop);
+    simulate.add(setSpeed);
   }
 
   private void addListeners()
   {
     save.addActionListener(this);
     load.addActionListener(this);
-    AND.addActionListener(this);
-    NAND.addActionListener(this);
-    OR.addActionListener(this);
-    NOR.addActionListener(this);
-    NOT.addActionListener(this);
-    bitDisplay.addActionListener(this);
-    switchSource.addActionListener(this);
+    andGate.addActionListener(e -> SimComponentFactory.createAndGate());
+    nandGate.addActionListener(e -> SimComponentFactory.createNandGate());
+    orGate.addActionListener(e -> SimComponentFactory.createOrGate());
+    norGate.addActionListener(e -> SimComponentFactory.createNorGate());
+    notGate.addActionListener(e -> SimComponentFactory.createNotGate());
+    bitDisplay.addActionListener(e -> SimComponentFactory.createBitDisplay());
+    switchSource.addActionListener(e -> SimComponentFactory.createSwitchSource());
     oneOne.addActionListener(this);
     oneTwo.addActionListener(this);
     oneFour.addActionListener(this);
@@ -100,27 +98,6 @@ public class MyBar extends JMenuBar implements ActionListener
   public void actionPerformed(ActionEvent e)
   {
     switch(e.getActionCommand()) {
-      case "OR Gate":
-        Engine.addGate(GateType.OR);
-        break;
-      case "AND Gate":
-        Engine.addGate(GateType.AND);
-        break;
-      case "NAND Gate":
-        Engine.addGate(GateType.NAND);
-        break;
-      case "NOR Gate":
-        Engine.addGate(GateType.NOR);
-        break;
-      case "NOT Gate":
-        Engine.addGate(GateType.NOT);
-        break;
-      case "Bit display":
-        Engine.addDisplayComponent(DisplayComponentType.BIT);
-        break;
-      case "Switch":
-        Engine.addSourceComponent(SourceComponentType.SWITCH);
-        break;
       case "Start simulation":
         Engine.startSimulation();
         break;
@@ -128,16 +105,16 @@ public class MyBar extends JMenuBar implements ActionListener
         Engine.stopSimulation();
         break;
       case "1/1":
-        Engine.clock.changeSpeed(1);
+        Engine.getClock().changeSpeed(1);
         break;
       case "1/2":
-        Engine.clock.changeSpeed(2);
+        Engine.getClock().changeSpeed(2);
         break;
       case "1/4":
-        Engine.clock.changeSpeed(4);
+        Engine.getClock().changeSpeed(4);
         break;
       case "1/8":
-        Engine.clock.changeSpeed(8);
+        Engine.getClock().changeSpeed(8);
         break;
       default:
         break;

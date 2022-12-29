@@ -1,4 +1,6 @@
-package app;
+package simUtils;
+
+import app.Engine;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,14 +32,14 @@ public class SimNotification implements ActionListener
     this.textArea.setFont(UIManager.getFont("Label.font"));
     this.textArea.setBorder(UIManager.getBorder("Label.border"));
 
-    this.dialog = new JDialog(Engine.frame, "Message");
+    this.dialog = new JDialog(Engine.getFrame(), "Message");
     this.dialog.setSize(SIZE);
     this.dialog.setLayout(new GridBagLayout());
     this.dialog.add(textArea);
     this.timer = new Timer(2000, this);
     this.timer.setRepeats(false);
-    this.dialog.setLocation(Engine.frame.getLocation().x + Engine.frame.getWidth() - SIZE.width - OFFSET.width,
-                            Engine.frame.getLocation().y + Engine.frame.getHeight() - SIZE.height - OFFSET.height);
+    this.dialog.setLocation(Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
+                            Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
     this.dialog.setVisible(true);
     this.timer.start();
   }
@@ -59,12 +61,12 @@ public class SimNotification implements ActionListener
       this.textArea.setFont(UIManager.getFont("Label.font"));
       this.textArea.setBorder(UIManager.getBorder("Label.border"));
 
-      this.dialog = new JDialog(Engine.frame, "Message");
+      this.dialog = new JDialog(Engine.getFrame(), "Message");
       this.dialog.setSize(SIZE);
       this.dialog.setLayout(new GridBagLayout());
       this.dialog.add(textArea);
-      this.dialog.setLocation(Engine.frame.getLocation().x + Engine.frame.getWidth() - SIZE.width - OFFSET.width,
-                              Engine.frame.getLocation().y + Engine.frame.getHeight() - SIZE.height - OFFSET.height);
+      this.dialog.setLocation(Engine.getFrame().getLocation().x + Engine.getFrame().getWidth() - SIZE.width - OFFSET.width,
+                              Engine.getFrame().getLocation().y + Engine.getFrame().getHeight() - SIZE.height - OFFSET.height);
       this.dialog.setVisible(true);
     }
   }
