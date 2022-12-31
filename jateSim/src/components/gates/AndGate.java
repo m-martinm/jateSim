@@ -1,5 +1,6 @@
 package components.gates;
 
+import components.boxer.Prototype;
 import components.pins.Pin;
 
 import javax.swing.*;
@@ -18,5 +19,11 @@ public class AndGate extends Gate
     } else {
       this.output.setValue(this.input1.getValue() & this.input2.getValue());
     }
+  }
+
+  @Override
+  public Prototype clone()
+  {
+    return new AndGate(getX(), getY(), getParent());
   }
 }

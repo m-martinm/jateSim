@@ -3,6 +3,7 @@ package components;
 
 import app.Engine;
 import app.Mode;
+import components.boxer.Prototype;
 import components.signals.Signal;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
-public class SimComponent implements MouseListener, MouseMotionListener
+public class SimComponent implements MouseListener, MouseMotionListener, Prototype
 {
   private JLabel label;
   private JPanel parent;
@@ -165,5 +166,11 @@ public class SimComponent implements MouseListener, MouseMotionListener
   public void mouseMoved(MouseEvent e)
   {
 
+  }
+
+  @Override
+  public Prototype clone()
+  {
+    return new SimComponent(getX(), getY(), getW(), getH(), getLabel().getText(), getParent());
   }
 }

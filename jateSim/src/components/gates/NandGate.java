@@ -1,5 +1,6 @@
 package components.gates;
 
+import components.boxer.Prototype;
 import components.pins.Pin;
 
 import javax.swing.*;
@@ -29,5 +30,10 @@ public class NandGate extends Gate
           break;
       }
     }
+  }
+  @Override
+  public Prototype clone()
+  {
+    return new NandGate(getX(), getY(), getParent());
   }
 }

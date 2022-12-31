@@ -3,6 +3,7 @@ package components.gates;
 import app.Engine;
 import app.Mode;
 import components.SimComponent;
+import components.boxer.Prototype;
 import components.pins.Pin;
 import components.pins.PinType;
 import components.signals.Signal;
@@ -89,5 +90,11 @@ public class Gate extends SimComponent
     this.input1.deleteComponent();
     this.input2.deleteComponent();
     this.output.deleteComponent();
+  }
+
+  @Override
+  public Prototype clone()
+  {
+    return new Gate(getX(), getY(), getLabel().getText(), getParent());
   }
 }

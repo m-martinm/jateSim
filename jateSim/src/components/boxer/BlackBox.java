@@ -15,7 +15,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class BlackBox extends SimComponent
+public class BlackBox extends SimComponent implements Prototype
 {
   public static Dimension SIZE = new Dimension(100, 100);
   public static ArrayList<BlackBox> blackBoxes = new ArrayList<>();
@@ -84,14 +84,10 @@ public class BlackBox extends SimComponent
 
   public void cloneBox()
   {
-    for(int i = 0; i < inputs.size(); i++) {
-
+    for(Gate g : gates) {
+      g.clone();
+      // TODO finish
     }
-    BlackBox clone = new BlackBox(getX(), getY(), inputs, outputs, gates, signals, getParent()); //TODO make a copy of these arrays
-    clone.getLabel().setText(getLabel().getText());
-    blackBoxes.add(clone);
-    Engine.getContentPanel().update();
-    Signal.repositionSignals();
   }
 
 
@@ -209,5 +205,13 @@ public class BlackBox extends SimComponent
       }
     }
     new BlackBox(x, y, inputsTmp, outputsTmp, gatesTmp, signalsTmp, parentPanel);
+  }
+
+  @Override
+  public Prototype clone()
+  {
+    BlackBox clone = new BlackBox(getX(), getY(), inputs, outputs, gates, signals, getParent());
+    clone.getLabel().setText(getLabel().getText());
+    return clone;
   }
 }

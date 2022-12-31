@@ -2,6 +2,7 @@ package components.gates;
 
 import app.Engine;
 import app.Mode;
+import components.boxer.Prototype;
 import components.pins.Pin;
 import components.signals.Signal;
 
@@ -54,5 +55,10 @@ public class NotGate extends Gate
           break;
       }
     }
+  }
+  @Override
+  public Prototype clone()
+  {
+    return new NotGate(getX(), getY(), getParent());
   }
 }
